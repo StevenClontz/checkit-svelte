@@ -13,7 +13,9 @@
 		let _1 = {..._0}
 		let _2 = {..._0}
 		_1.title = "Foobar"
+		_1.slug = "foo"
 		_2.title = "Hello Baz"
+		_2.slug = "baz"
 		banks = [_0,_1,_2];
 	});
 	let banks: Array<Bank> = [];

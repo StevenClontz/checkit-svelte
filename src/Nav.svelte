@@ -1,33 +1,22 @@
 <script lang="ts">
+    import BankDropdown from './BankDropdown.svelte';
     import {
         Navbar,
-        NavbarBrand,
         Nav,
-        UncontrolledDropdown,
-        DropdownToggle,
-        DropdownMenu,
-        DropdownItem,
     } from 'sveltestrap';
-
     import type {Bank} from './types';
+
     export let bank: Bank | undefined;
     export let banks: Array<Bank>;
 
-    function unsetBank() {
-        bank = undefined;
-    }
+    const unsetBank = () => bank = undefined;
 </script>
 
 <Navbar color="primary" dark expand="md">
     <a class="navbar-brand" on:click|preventDefault={unsetBank} href="/">☑️It</a>
     {#if bank}
         <Nav navbar>
-            <UncontrolledDropdown nav inNavbar>
-                <DropdownToggle nav caret>{bank.title}</DropdownToggle>
-                <DropdownMenu left>
-                    <DropdownItem on:click={unsetBank}>Back to Home</DropdownItem>
-                </DropdownMenu>
-            </UncontrolledDropdown>
+            <BankDropdown inNav bind:bank={bank} {banks}/>
         </Nav>
     {/if}
 </Navbar>

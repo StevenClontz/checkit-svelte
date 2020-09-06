@@ -1,11 +1,8 @@
 <script lang="ts">
+    import BankDropdown from './BankDropdown.svelte';
     import {
         Container,
         Jumbotron,
-        UncontrolledDropdown,
-        DropdownToggle,
-        DropdownMenu,
-        DropdownItem,
     } from 'sveltestrap';
     import type { Bank } from './types';
 
@@ -33,18 +30,7 @@
         </ul>
 
         <p class="lead">
-            <UncontrolledDropdown color="primary">
-                <DropdownToggle caret>Select an exercise bank:</DropdownToggle>
-                <DropdownMenu>
-                    {#each banks as b}
-                        <DropdownItem on:click={setBank(b)}>{b.title}</DropdownItem>
-                    {:else}
-                        <DropdownItem disabled>No banks found.</DropdownItem>
-                    {/each}
-                    <DropdownItem divider/>
-                    <DropdownItem on:click={unsetBank}>Back to Home</DropdownItem>
-                </DropdownMenu>
-            </UncontrolledDropdown>
+            <BankDropdown bind:bank={bank} {banks}/>
         </p>
     </Container>
 </Jumbotron>
