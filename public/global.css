@@ -8,10 +8,8 @@
 .exercise-hr {
   padding: 20px;
 }
-.jumbotron.bg-cover {
-    background-position: center;
-    background-size: cover;
-    background-image:
-        linear-gradient(to bottom, rgba(255,255,255,0.7) 0%,rgba(255,255,255,0.95) 100%),
-        url(/jumbotron.svg) /* credit https://pixabay.com/illustrations/expectrum-rainbow-lines-colour-1191724/ */
+.jumbotron {
+    border-radius: 0;
+    background-color: transparent;
+    background-image: radial-gradient(rgba(0, 123, 255,0.4),rgba(0, 123, 255,0.05),transparent);
 }
