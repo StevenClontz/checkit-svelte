@@ -1,14 +1,18 @@
 <script lang="ts">
-	import { Container } from 'sveltestrap';
+	import { Container, Alert } from 'sveltestrap';
 	import type { Bank } from './types';
 	export let bank: Bank;
 </script>
 
 <Container>
 <h1>{bank.title}</h1>
-{#each bank.outcomes as outcome}
-<pre>{outcome.title}</pre>
+{#if bank.outcomes}
+<ul>
+	{#each bank.outcomes as outcome}
+	<li>{outcome.title}</li>
+	{/each}
+</ul>
 {:else}
-<pre>Loading...</pre>
-{/each}
+<Alert color="warning">No outcomes found for this bank.</Alert>
+{/if}
 </Container>

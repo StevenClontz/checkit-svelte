@@ -8,16 +8,22 @@
 
 	let bank: Bank | undefined = undefined;
 	onMount(async () => {
-		const res = await fetch(`bank.json`);
-		bank = await res.json();
+		const res = await fetch(`./bank.json`);
+		let _0 = await res.json()
+		let _1 = {..._0}
+		let _2 = {..._0}
+		_1.title = "Foobar"
+		_2.title = "Hello Baz"
+		banks = [_0,_1,_2];
 	});
+	let banks: Array<Bank> = [];
 </script>
 
-<Nav/>
+<Nav bind:bank={bank} {banks}/>
 
 {#if bank}
-<BankComponent bank={bank}/>
+<BankComponent {bank}/>
 {:else}
-<Jumbotron/>
+<Jumbotron bind:bank={bank} {banks}/>
 <Front/>
 {/if}

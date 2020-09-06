@@ -1,47 +1,33 @@
 <script lang="ts">
-
     import {
-      Collapse,
-      Navbar,
-      NavbarToggler,
-      NavbarBrand,
-      Nav,
-      NavItem,
-      NavLink,
-      UncontrolledDropdown,
-      DropdownToggle,
-      DropdownMenu,
-      DropdownItem,
+        Navbar,
+        NavbarBrand,
+        Nav,
+        UncontrolledDropdown,
+        DropdownToggle,
+        DropdownMenu,
+        DropdownItem,
     } from 'sveltestrap';
-  
-    let isOpen = false;
-  
-    function handleUpdate(event) {
-      isOpen = event.detail.isOpen;
-	}
 
+    import type {Bank} from './types';
+    export let bank: Bank | undefined;
+    export let banks: Array<Bank>;
+
+    function unsetBank() {
+        bank = undefined;
+    }
 </script>
 
 <Navbar color="primary" dark expand="md">
-  <NavbarBrand href="/">☑️It</NavbarBrand>
-  <NavbarToggler on:click={() => (isOpen = !isOpen)} />
-  <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
-    <Nav navbar>
-      <NavItem>
-        <NavLink href="#">Bank 1</NavLink>
-      </NavItem>
-      <NavItem>
-        <NavLink href="#">Bank 2</NavLink>
-      </NavItem>
-      <UncontrolledDropdown nav inNavbar>
-        <DropdownToggle nav caret>Options</DropdownToggle>
-        <DropdownMenu right>
-          <DropdownItem>Option 1</DropdownItem>
-          <DropdownItem>Option 2</DropdownItem>
-          <DropdownItem divider />
-          <DropdownItem>Reset</DropdownItem>
-        </DropdownMenu>
-      </UncontrolledDropdown>
-    </Nav>
-  </Collapse>
+    <a class="navbar-brand" on:click|preventDefault={unsetBank} href="/">☑️It</a>
+    {#if bank}
+        <Nav navbar>
+            <UncontrolledDropdown nav inNavbar>
+                <DropdownToggle nav caret>{bank.title}</DropdownToggle>
+                <DropdownMenu left>
+                    <DropdownItem on:click={unsetBank}>Back to Home</DropdownItem>
+                </DropdownMenu>
+            </UncontrolledDropdown>
+        </Nav>
+    {/if}
 </Navbar>
