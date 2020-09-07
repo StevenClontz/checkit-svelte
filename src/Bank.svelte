@@ -5,11 +5,13 @@
         DropdownMenu,
         DropdownItem,
         Container,
-        Row,
         Alert,
     } from 'sveltestrap';
     import type { Bank, Outcome } from './types';
+    import OutcomeComponent from './Outcome.svelte'
+
     export let bank: Bank;
+
     let outcome: Outcome | undefined = undefined;
     let oldBankSlug = bank.slug;
     $: if (bank.slug !== oldBankSlug) {
@@ -41,6 +43,6 @@
 
     {#if outcome}
         <hr/>
-        <h3>{outcome.slug} - {outcome.title}</h3>
+        <OutcomeComponent {outcome}/>
     {/if}
 </Container>

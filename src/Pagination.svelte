@@ -1,0 +1,38 @@
+<script lang="ts">
+    import {
+        Pagination, PaginationItem, PaginationLink
+    } from 'sveltestrap';
+
+    export let page: number;
+    export let pages: number;
+
+    const pageRange = (p:number) => {
+        let start = Math.max(0,Math.min(p-2,pages-5))
+        let end = Math.min(pages,start+5)
+        return Array.from({length: end-start}, (_, key) => start+key);
+    }
+    const setPage = (p:number) => (e:Event) => {
+        e.preventDefault();
+        page = p;
+    }
+</script>
+
+<Pagination ariaLabel="Choosing example">
+    <PaginationItem disabled={page==0}>
+        <PaginationLink first on:click={setPage(0)} />
+    </PaginationItem>
+    <PaginationItem disabled={page==0}>
+        <PaginationLink previous on:click={setPage(page-1)} />
+    </PaginationItem>
+    {#each pageRange(page) as p}
+        <PaginationItem active={page==p}>
+            <PaginationLink on:click={setPage(p)}>{p+1}</PaginationLink>
+        </PaginationItem>
+    {/each}
+    <PaginationItem disabled={page==pages-1}>
+        <PaginationLink next on:click={setPage(page+1)} />
+    </PaginationItem>
+    <PaginationItem disabled={page==pages-1}>
+        <PaginationLink last on:click={setPage(pages-1)} />
+    </PaginationItem>
+</Pagination>
