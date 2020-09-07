@@ -1,14 +1,19 @@
 <script lang="ts">
     import Pagination from './Pagination.svelte';
     import type { Outcome } from './types';
+    import { parseMath } from './mathjax.js';
 
     export let outcome: Outcome;
 
-    let page = 0;
+    let version = 0;
 </script>
 
 <h3>{outcome.slug} - {outcome.title}</h3>
 
-<p>{page}</p>
+<div>
+    Version:
+    <Pagination bind:page={version} pages={outcome.exercises.length}/>
+</div>
 
-<Pagination bind:page={page} pages={outcome.exercises.length}/>
+<!--{@html parseMath(outcome.exercises[version].html)}-->
+{@html outcome.exercises[version].html}
