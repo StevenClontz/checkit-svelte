@@ -28,7 +28,7 @@
             <DropdownItem on:click={setBank(b)}>{b.title}</DropdownItem>
         {/each}
         {#if bank}
-            {#if banks.length > 1}
+            {#if banks}
                 <DropdownItem divider/>
             {/if}
             <DropdownItem on:click={unsetBank}>Back to Home</DropdownItem>
