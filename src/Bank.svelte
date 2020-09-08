@@ -23,26 +23,27 @@
 <Container>
     <h1>{bank.title}</h1>
     {#if bank.outcomes}
-        <UncontrolledDropdown>
-            <DropdownToggle caret>
-                {#if outcome}
-                    {outcome.slug} - {outcome.title}
-                {:else}
-                    Select an outcome:
-                {/if}
-            </DropdownToggle>
-            <DropdownMenu>
-                {#each bank.outcomes as o}
-                    <DropdownItem on:click={() => outcome = o}>{o.slug} - {o.title}</DropdownItem>
-                {/each}
-            </DropdownMenu>
-        </UncontrolledDropdown>
+        <p>
+            <UncontrolledDropdown>
+                <DropdownToggle caret>
+                    {#if outcome}
+                        {outcome.slug} - {outcome.title}
+                    {:else}
+                        Select an outcome:
+                    {/if}
+                </DropdownToggle>
+                <DropdownMenu>
+                    {#each bank.outcomes as o}
+                        <DropdownItem on:click={() => outcome = o}>{o.slug} - {o.title}</DropdownItem>
+                    {/each}
+                </DropdownMenu>
+            </UncontrolledDropdown>
+        </p>
     {:else}
         <Alert color="warning">No outcomes found for this bank.</Alert>
     {/if}
 
     {#if outcome}
-        <hr/>
         <OutcomeComponent {outcome}/>
     {/if}
 </Container>

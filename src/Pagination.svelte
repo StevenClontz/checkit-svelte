@@ -5,6 +5,7 @@
 
     export let page: number;
     export let pages: number;
+    export let label: string | undefined;
 
     const pageRange = (p:number) => {
         let start = Math.max(0,Math.min(p-2,pages-5))
@@ -18,6 +19,11 @@
 </script>
 
 <Pagination ariaLabel="Choosing example">
+    {#if label}
+    <PaginationItem disabled>
+        <PaginationLink>{label}</PaginationLink>
+    </PaginationItem>
+    {/if}
     <PaginationItem disabled={page==0}>
         <PaginationLink first on:click={setPage(0)} />
     </PaginationItem>

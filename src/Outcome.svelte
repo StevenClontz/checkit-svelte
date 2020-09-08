@@ -29,11 +29,10 @@
     }
 </script>
 
-<h3>{outcome.slug} - {outcome.title}</h3>
-
 <div>
-    Version:
-    <Pagination bind:page={version} pages={outcome.exercises.length}/>
+    <Pagination label="Version:" bind:page={version} pages={outcome.exercises.length}/>
 </div>
+
+<hr/>
 
 {@html preview(outcome.exercises[version])}

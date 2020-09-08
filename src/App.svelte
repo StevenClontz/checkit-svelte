@@ -6,7 +6,9 @@
     import { onMount } from 'svelte';
     import type { Bank } from './types';
 
+    let loading = true;
     let bank: Bank | undefined = undefined;
+    let banks: Array<Bank> = [];
     onMount(async () => {
         const res = await fetch(`./bank.json`);
         let _0 = await res.json();
@@ -19,15 +21,25 @@
         _2.slug = "baz";
         _2.outcomes = _2.outcomes.slice(3,8);
         banks = [_0,_1,_2];
+        loading = false;
     });
-    let banks: Array<Bank> = [];
 </script>
 
 <Nav bind:bank={bank} {banks}/>
 
-{#if bank}
-<BankComponent {bank}/>
+{#if loading}
+    <div class="text-center">
+        <h1 class="display-4">Loading ☑️It...</h1>
+    </div>
 {:else}
-<Jumbotron bind:bank={bank} {banks}/>
-<Front/>
+    {#if bank}
+        <BankComponent {bank}/>
+    {:else}
+        <Jumbotron bind:bank={bank} {banks}/>
+        <Front/>
+    {/if}
 {/if}
+
+<style>
+    h1 { margin-top: 1em }
+</style>
