@@ -1,18 +1,28 @@
 <script lang="ts">
     import Pagination from './Pagination.svelte';
     import type { Outcome, Exercise } from './types';
-    //import katex from 'katex';
+    import katex from 'katex';
 
     export let outcome: Outcome;
 
     let version = 0;
 
-    let inlineMathRe = /\\\((.*)\\\)/;
-    let displayMathRe = /\\\[(.*)\\\]/;
+    let inlineMathRe = /\\\((.*?)\\\)/gs;
+    let displayMathRe = /\\\[(.*?)\\\]/gs;
     const parseMath = (html:string) => {
-        //html = html.replace(inlineMathRe, katex.renderToString);
-        //return html.replace(displayMathRe, katex.renderToString);
-        return html
+        return html.replace(
+            inlineMathRe,
+            (_, tex:string) => katex.renderToString(tex, {
+                'displayMode': false,
+                'throwOnError': false,
+            })
+        ).replace(
+            displayMathRe,
+            (_, tex:string) => katex.renderToString(tex, {
+                'displayMode': true,
+                'throwOnError': false,
+            })
+        );
     };
     const preview = (e:Exercise) => {
         return parseMath(e.html)
