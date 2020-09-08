@@ -16,7 +16,16 @@
         e.preventDefault();
         page = p;
     }
+    const handleKeydown = (e:KeyboardEvent) => {
+        if (e.key === "ArrowLeft") {
+            page = Math.max(0,page-1);
+        } else if (e.key === "ArrowRight") {
+            page = Math.min(pages-1,page+1);
+        }
+    }
 </script>
+
+<svelte:window on:keydown={handleKeydown}/>
 
 <Pagination ariaLabel="Choosing example">
     {#if label}

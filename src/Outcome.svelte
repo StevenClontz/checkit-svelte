@@ -8,13 +8,23 @@
 
     let version = 0;
     let hiddenAnswer = true;
+
+    const toggleAnswer = () => hiddenAnswer = !hiddenAnswer;
+
+    const handleKeydown = (e:KeyboardEvent) => {
+        if (e.key === " ") {
+            toggleAnswer()
+        }
+    }
 </script>
+
+<svelte:window on:keydown={handleKeydown}/>
 
 <div>
     <Pagination label="Version:" bind:page={version} pages={outcome.exercises.length}/>
 </div>
 
-<Button color="info" on:click={() => hiddenAnswer = !hiddenAnswer}>
+<Button color="info" on:click={toggleAnswer}>
     {#if hiddenAnswer}Show{:else}Hide{/if} Answer
 </Button>
 
