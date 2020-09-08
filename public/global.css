@@ -1,16 +1,17 @@
-.dropdown-menu{
-  max-height:50vh;
-  overflow-y:auto;
-}
-.exercise,.exercise-answer {
-  overflow-x:auto;
-}
-.exercise-hr {
-  padding: 20px;
+.dropdown-menu {
+    max-height:50vh;
+    overflow-y:auto;
 }
 .jumbotron {
     border-radius: 0;
     background-color: transparent;
-    background-image: radial-gradient(rgba(0, 123, 255,0.4),rgba(0, 123, 255,0.05),transparent);
+    background-image: radial-gradient(
+        rgba(0, 123, 255,0.4),
+        rgba(0, 123, 255,0.05),
+        transparent
+    );
 }
-a.page-link { min-width: 3em; text-align: center; }
+a.page-link { 
+    min-width: 3em; 
+    text-align: center; 
+}

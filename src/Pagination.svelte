@@ -27,27 +27,35 @@
 
 <svelte:window on:keydown={handleKeydown}/>
 
-<Pagination ariaLabel="Choosing example">
-    {#if label}
-    <PaginationItem disabled>
-        <PaginationLink>{label}</PaginationLink>
-    </PaginationItem>
-    {/if}
-    <PaginationItem disabled={page==0}>
-        <PaginationLink first on:click={setPage(0)} />
-    </PaginationItem>
-    <PaginationItem disabled={page==0}>
-        <PaginationLink previous on:click={setPage(page-1)} />
-    </PaginationItem>
-    {#each pageRange(page) as p}
-        <PaginationItem active={page==p}>
-            <PaginationLink on:click={setPage(p)}>{p+1}</PaginationLink>
+<div class="pagination">
+    <Pagination ariaLabel={label}>
+        {#if label}
+        <PaginationItem disabled>
+            <PaginationLink>{label}</PaginationLink>
         </PaginationItem>
-    {/each}
-    <PaginationItem disabled={page==pages-1}>
-        <PaginationLink next on:click={setPage(page+1)} />
-    </PaginationItem>
-    <PaginationItem disabled={page==pages-1}>
-        <PaginationLink last on:click={setPage(pages-1)} />
-    </PaginationItem>
-</Pagination>
+        {/if}
+        <PaginationItem disabled={page==0}>
+            <PaginationLink first on:click={setPage(0)} />
+        </PaginationItem>
+        <PaginationItem disabled={page==0}>
+            <PaginationLink previous on:click={setPage(page-1)} />
+        </PaginationItem>
+        {#each pageRange(page) as p}
+            <PaginationItem active={page==p}>
+                <PaginationLink on:click={setPage(p)}>{p+1}</PaginationLink>
+            </PaginationItem>
+        {/each}
+        <PaginationItem disabled={page==pages-1}>
+            <PaginationLink next on:click={setPage(page+1)} />
+        </PaginationItem>
+        <PaginationItem disabled={page==pages-1}>
+            <PaginationLink last on:click={setPage(pages-1)} />
+        </PaginationItem>
+    </Pagination>
+</div>
+
+<style>
+    .pagination {
+        overflow-x: scroll;
+    }
+</style>

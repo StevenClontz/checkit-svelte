@@ -38,6 +38,10 @@
     afterUpdate(decorateAnswer);
 </script>
 
-<div bind:this={exerciseDiv}>
+<div class="exercise" bind:this={exerciseDiv}>
     {@html parseMath(html)}
 </div>
+
+<style>
+    .exercise { overflow-x: scroll; }
+</style>

@@ -16,7 +16,7 @@
     <a class="navbar-brand" on:click|preventDefault={unsetBank} href="/">☑️It</a>
     {#if bank}
         <Nav navbar>
-            <BankDropdown inNav bind:bank={bank} {banks}/>
+            <BankDropdown active inNav bind:bank={bank} {banks}/>
         </Nav>
     {/if}
 </Navbar>

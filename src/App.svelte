@@ -33,7 +33,9 @@
     </div>
 {:else}
     {#if bank}
-        <BankComponent {bank}/>
+        <div class="bank">
+            <BankComponent {bank}/>
+        </div>
     {:else}
         <Jumbotron bind:bank={bank} {banks}/>
         <Front/>
@@ -41,5 +43,5 @@
 {/if}
 
 <style>
-    h1 { margin-top: 1em }
+    h1 { margin-top: 1em; }
 </style>

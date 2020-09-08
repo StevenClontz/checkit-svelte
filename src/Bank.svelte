@@ -47,3 +47,7 @@
         <OutcomeComponent {outcome}/>
     {/if}
 </Container>
+
+<style>
+    h1 {margin-top: 0.5em;}
+</style>
