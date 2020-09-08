@@ -1,6 +1,6 @@
 <script lang="ts">
     import katex from 'katex';
-    import { onMount } from 'svelte';
+    import { afterUpdate } from 'svelte';
 
     export let html: string;
     export let hiddenAnswer: boolean;
@@ -22,16 +22,22 @@
             })
         );
     }
+
+    let exerciseDiv: Element;
     const decorateAnswer = () => {
-        for (let e of document.getElementsByClassName("exercise-answer")) {
+        for (let e of exerciseDiv.getElementsByClassName("exercise-answer")) {
             e.classList.add("alert");
             e.classList.add("alert-info");
             if (hiddenAnswer) {
                 e.classList.add("d-none");
+            } else {
+                e.classList.remove("d-none");
             }
         }
     }
-    onMount(decorateAnswer);
+    afterUpdate(decorateAnswer);
 </script>
 
-{@html parseMath(html)}
+<div bind:this={exerciseDiv}>
+    {@html parseMath(html)}
+</div>
