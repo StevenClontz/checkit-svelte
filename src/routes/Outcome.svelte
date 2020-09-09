@@ -53,5 +53,5 @@
     
     <hr/>
     
-    <Exercise {hiddenAnswer} html={exercise.html}/>
+    <Exercise {hiddenAnswer} {exercise}/>
 </Bank>

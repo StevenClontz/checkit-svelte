@@ -1,8 +1,10 @@
 <script lang="ts">
     import katex from 'katex';
     import { afterUpdate } from 'svelte';
+    import type { Exercise } from '../types';
+    import { instructor } from '../stores/instructor';
 
-    export let html: string;
+    export let exercise: Exercise;
     export let hiddenAnswer: boolean;
 
     let inlineMathRe = /\\\((.*?)\\\)/gs;
@@ -39,8 +41,10 @@
 </script>
 
 <div class="exercise" bind:this={exerciseDiv}>
-    {@html parseMath(html)}
+    {@html parseMath(exercise.html)}
 </div>
+
+{#if $instructor.enabled}let's show cool things here{/if}
 
 <style>
     .exercise { overflow-x: scroll; }
