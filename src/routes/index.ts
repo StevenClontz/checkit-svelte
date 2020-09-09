@@ -6,6 +6,6 @@ import NotFound from './NotFound.svelte';
 export const routes = {
     '/': Home,
     '/banks/:bankSlug': Bank,
-    '/banks/:bankSlug/:outcomeSlug/:versionSlug?': Outcome,
+    '/banks/:bankSlug/:outcomeSlug/:exerciseVersion?': Outcome,
     '*': NotFound,
 }
