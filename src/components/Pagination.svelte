@@ -6,6 +6,7 @@
     export let page: number;
     export let pages: number;
     export let label: string | undefined = undefined;
+    export let keyboardControl: boolean = false;
 
     const pageRange = (p:number) => {
         let start = Math.max(0,Math.min(p-2,pages-5))
@@ -17,13 +18,16 @@
         page = p;
     }
     const handleKeydown = (e:KeyboardEvent) => {
-        if (e.key === "ArrowLeft") {
-            page = Math.max(0,page-1);
-        } else if (e.key === "ArrowRight") {
-            page = Math.min(pages-1,page+1);
+        if (keyboardControl) {
+            if (e.key === "ArrowLeft") {
+                page = Math.max(0,page-1);
+            } else if (e.key === "ArrowRight") {
+                page = Math.min(pages-1,page+1);
+            }
         }
     }
 </script>
+
 
 <svelte:window on:keydown={handleKeydown}/>
 
