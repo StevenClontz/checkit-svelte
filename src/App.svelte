@@ -5,10 +5,10 @@
     import Nav from './Nav.svelte';
     import { onMount } from 'svelte';
     import type { Bank } from './types';
+    import { banks } from './banks';
 
-    let loading = true;
     let bank: Bank | undefined = undefined;
-    let banks: Array<Bank> = [];
+    let loading = true;
     onMount(async () => {
         const res = await fetch(`./bank.json`);
         let _0 = await res.json();
@@ -20,12 +20,12 @@
         _2.title = "Hello Baz";
         _2.slug = "baz";
         _2.outcomes = _2.outcomes.slice(3,8);
-        banks = [_0,_1,_2];
+        banks.push(_0,_1,_2)
         loading = false;
     });
 </script>
 
-<Nav bind:bank={bank} {banks}/>
+<Nav bind:bank={bank}/>
 
 {#if loading}
     <div class="text-center">
@@ -34,10 +34,10 @@
 {:else}
     {#if bank}
         <div class="bank">
-            <BankComponent {bank}/>
+            <BankComponent bind:bank={bank}/>
         </div>
     {:else}
-        <Jumbotron bind:bank={bank} {banks}/>
+        <Jumbotron bind:bank={bank}/>
         <Front/>
     {/if}
 {/if}

@@ -6,11 +6,7 @@
     } from 'sveltestrap';
     import type { Bank } from './types';
 
-    export let banks: Array<Bank> = [];
     export let bank: Bank | undefined;
-    
-	const setBank = (b:Bank) => () => bank=b;
-	const unsetBank = () => bank=undefined;
 </script>
 
 <Jumbotron>
@@ -30,7 +26,7 @@
         </ul>
 
         <p class="lead">
-            <BankDropdown bind:bank={bank} {banks}/>
+            <BankDropdown bind:bank={bank}/>
         </p>
     </Container>
 </Jumbotron>

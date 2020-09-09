@@ -7,7 +7,6 @@
     import type {Bank} from './types';
 
     export let bank: Bank | undefined;
-    export let banks: Array<Bank>;
 
     const unsetBank = () => bank = undefined;
 </script>
@@ -16,7 +15,7 @@
     <a class="navbar-brand" on:click|preventDefault={unsetBank} href="/">☑️It</a>
     {#if bank}
         <Nav navbar>
-            <BankDropdown active inNav bind:bank={bank} {banks}/>
+            <BankDropdown inNav bind:bank={bank}/>
         </Nav>
     {/if}
 </Navbar>
