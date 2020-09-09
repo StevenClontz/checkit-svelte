@@ -24,7 +24,7 @@
         {/if}
     </DropdownToggle>
     <DropdownMenu>
-        {#each banks as b}
+        {#each $banks as b}
             <DropdownItem on:click={setBank(b)}>{b.title}</DropdownItem>
         {/each}
         {#if bank}

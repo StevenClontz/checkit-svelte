@@ -20,7 +20,7 @@
         _2.title = "Hello Baz";
         _2.slug = "baz";
         _2.outcomes = _2.outcomes.slice(3,8);
-        banks.push(_0,_1,_2)
+        banks.set([_0,_1,_2])
         loading = false;
     });
 </script>
