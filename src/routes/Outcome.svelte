@@ -47,11 +47,11 @@
         <Pagination bind:page={page} pages={outcome.exercises.length}/>
     </div>
     
-    <Button color="info" on:click={toggleAnswer}>
-        {#if hiddenAnswer}Show{:else}Hide{/if} Answer
-    </Button>
-    
-    <hr/>
+    <p>
+        <Button color="info" on:click={toggleAnswer}>
+            {#if hiddenAnswer}Show{:else}Hide{/if} Answer
+        </Button>
+    </p>
     
     <Exercise {hiddenAnswer} {exercise}/>
 </Bank>

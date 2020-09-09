@@ -11,8 +11,8 @@ export type Outcome = {
 export type Exercise = {
     seed: number
     qti: string
-    ptx: string
-    latex: string 
+    pretext: string
+    tex: string 
     html: string
 }
 export type Params = {

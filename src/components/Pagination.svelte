@@ -57,9 +57,3 @@
         </PaginationItem>
     </Pagination>
 </div>
-
-<style>
-    .pagination {
-        overflow-x: scroll;
-    }
-</style>

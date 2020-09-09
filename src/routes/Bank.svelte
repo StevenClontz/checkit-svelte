@@ -23,17 +23,19 @@
 
 <Nav {bank}/>
 
-<Container>
-    <h1>{bank.title}</h1>
-    {#if bank.outcomes}
-        <p>
-            <OutcomeDropdown {bank} {outcome}/>
-        </p>
-    {:else}
-        <Alert color="warning">No outcomes found for this bank.</Alert>
-    {/if}
-    <slot/>
-</Container>
+<main>
+    <Container>
+        <h1>{bank.title}</h1>
+        {#if bank.outcomes}
+            <p>
+                <OutcomeDropdown {bank} {outcome}/>
+            </p>
+        {:else}
+            <Alert color="warning">No outcomes found for this bank.</Alert>
+        {/if}
+        <slot/>
+    </Container>
+</main>
 
 <style>
     h1 {margin-top: 0.5em;}

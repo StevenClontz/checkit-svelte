@@ -32,7 +32,7 @@
                 <form class="form-inline">
                     <FormGroup check>
                     <Label check class="navbar-text">
-                        <Input type="checkbox" bind:checked={$instructor.enabled} />
+                        <Input readonly={false} type="checkbox" bind:checked={$instructor.enabled} />
                         Show instructor options
                     </Label>
                     </FormGroup>
