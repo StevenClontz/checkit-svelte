@@ -22,7 +22,7 @@
     </DropdownToggle>
     <DropdownMenu>
         {#each $banks as b}
-            <DropdownItem disabled={b===bank} href="#/banks/{b.slug}">
+            <DropdownItem disabled={b===bank} href="#/banks/{b.slug}/">
                 {#if b===bank}»{/if} {b.title}
             </DropdownItem>
         {/each}

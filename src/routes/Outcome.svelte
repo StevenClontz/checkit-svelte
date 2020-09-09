@@ -5,12 +5,9 @@
     import { Button } from 'sveltestrap';
     import { banks } from '../stores/banks';
     import Bank from './Bank.svelte';
-
+    import { push } from 'svelte-spa-router';
 
     export let params:Params;
-
-    let version = 0;
-    let hiddenAnswer = true;
 
     const toggleAnswer = () => hiddenAnswer = !hiddenAnswer;
 
@@ -20,8 +17,16 @@
         }
     }
 
-    $: bank = $banks.find((b)=>b.slug==params.bankSlug);
-    $: outcome = bank.outcomes.find((o)=>o.slug==params.outcomeSlug); 
+    let bank = $banks.find((b)=>b.slug==params.bankSlug);
+    let outcome = bank.outcomes.find((o)=>o.slug==params.outcomeSlug);
+    
+    let versionString = (params.versionSlug ? params.versionSlug : "1")
+    let oldVersion = Math.max(0,Math.min(outcome.exercises.length,parseInt(versionString))-1);
+    let version = oldVersion;
+    $: if (version !== oldVersion) {
+        push(`/banks/${bank.slug}/${outcome.slug}/${version+1}`);
+    }
+    let hiddenAnswer = true; 
 </script>
 
 <svelte:window on:keydown={handleKeydown}/>

@@ -5,7 +5,7 @@
 
     export let page: number;
     export let pages: number;
-    export let label: string | undefined;
+    export let label: string | undefined = undefined;
 
     const pageRange = (p:number) => {
         let start = Math.max(0,Math.min(p-2,pages-5))

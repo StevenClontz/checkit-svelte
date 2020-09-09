@@ -18,4 +18,5 @@ export type Exercise = {
 export type Params = {
     bankSlug: string
     outcomeSlug: string
+    versionSlug: string
 }
