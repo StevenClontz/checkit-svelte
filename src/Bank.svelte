@@ -9,6 +9,7 @@
     } from 'sveltestrap';
     import type { Bank, Outcome } from './types';
     import OutcomeComponent from './Outcome.svelte'
+    import OutcomeDropdown from '../utils/OutcomeDropdown.svelte'
 
     export let bank: Bank;
 
@@ -24,20 +25,7 @@
     <h1>{bank.title}</h1>
     {#if bank.outcomes}
         <p>
-            <UncontrolledDropdown>
-                <DropdownToggle caret>
-                    {#if outcome}
-                        {outcome.slug} - {outcome.title}
-                    {:else}
-                        Select an outcome:
-                    {/if}
-                </DropdownToggle>
-                <DropdownMenu>
-                    {#each bank.outcomes as o}
-                        <DropdownItem on:click={() => outcome = o}>{o.slug} - {o.title}</DropdownItem>
-                    {/each}
-                </DropdownMenu>
-            </UncontrolledDropdown>
+            <OutcomeDropdown {bank} {outcome}/>
         </p>
     {:else}
         <Alert color="warning">No outcomes found for this bank.</Alert>

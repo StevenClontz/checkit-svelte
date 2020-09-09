@@ -4,16 +4,16 @@
         Navbar,
         Nav,
     } from 'sveltestrap';
-    import type {Params} from '../types';
+    import type { Bank } from '../types';
     
-    export let params:Params = {'bankSlug': undefined};
+    export let bank: Bank | undefined = undefined;
 </script>
 
 <Navbar color="primary" dark expand="md">
     <a class="navbar-brand" href="#/">☑️It</a>
-    {#if params.bankSlug}
+    {#if bank}
         <Nav navbar>
-            <BankDropdown inNav/>
+            <BankDropdown {bank} inNav/>
         </Nav>
     {/if}
 </Navbar>

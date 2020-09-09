@@ -5,19 +5,19 @@
         DropdownMenu,
         DropdownItem,
     } from 'sveltestrap';
+    import type { Bank, Outcome } from '../types';
     import { banks } from '../banks';
-    import type { Bank } from '../types';
 
-    export let inNav: boolean = false;
-    export let bank: Bank | undefined = undefined;
+    export let bank: Bank;
+    export let outcome: Outcome | undefined = undefined;
 </script>
 
-<UncontrolledDropdown nav={inNav} inNavbar={inNav}>
-    <DropdownToggle nav={inNav} caret>
-        {#if bank}
-            {bank.title}
+<UncontrolledDropdown>
+    <DropdownToggle caret>
+        {#if outcome}
+            {outcome.title}
         {:else}
-            Select an exercise bank:
+            Select a learning outcome:
         {/if}
     </DropdownToggle>
     <DropdownMenu>
