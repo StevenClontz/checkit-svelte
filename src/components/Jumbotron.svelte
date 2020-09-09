@@ -1,12 +1,9 @@
 <script lang="ts">
-    import BankDropdown from './BankDropdown.svelte';
     import {
         Container,
         Jumbotron,
     } from 'sveltestrap';
-    import type { Bank } from './types';
-
-    export let bank: Bank | undefined;
+    import BankDropdown from '../utils/BankDropdown.svelte';
 </script>
 
 <Jumbotron>
@@ -26,7 +23,7 @@
         </ul>
 
         <p class="lead">
-            <BankDropdown bind:bank={bank}/>
+            <BankDropdown/>
         </p>
     </Container>
 </Jumbotron>

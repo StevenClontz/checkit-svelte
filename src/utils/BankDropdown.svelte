@@ -5,33 +5,30 @@
         DropdownMenu,
         DropdownItem,
     } from 'sveltestrap';
-    import type {Bank} from './types';
-    import { banks } from './banks';
+    import { banks } from '../banks';
+    import type {Params} from '../types';
 
-    export let bank: Bank | undefined;
-    export let inNav: boolean;
-
-	const setBank = (b:Bank) => () => bank=b;
-	const unsetBank = () => bank=undefined;
+    export let inNav: boolean=false;
+    let params:Params = {'bankSlug': undefined};
 </script>
 
 <UncontrolledDropdown nav={inNav} inNavbar={inNav}>
     <DropdownToggle nav={inNav} caret>
-        {#if bank}
-            {bank.title}
+        {#if params.bankSlug}
+            TODO current bank title
         {:else}
             Select an exercise bank:
         {/if}
     </DropdownToggle>
     <DropdownMenu>
         {#each $banks as b}
-            <DropdownItem on:click={setBank(b)}>{b.title}</DropdownItem>
+            <DropdownItem href="#/banks/{b.slug}">{b.title}</DropdownItem>
         {/each}
-        {#if bank}
+        {#if params.bankSlug}
             {#if banks}
                 <DropdownItem divider/>
             {/if}
-            <DropdownItem on:click={unsetBank}>Back to Home</DropdownItem>
+            <DropdownItem href="#/">Back to Home</DropdownItem>
         {/if}
     </DropdownMenu>
 </UncontrolledDropdown>

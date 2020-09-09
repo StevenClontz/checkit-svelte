@@ -1,13 +1,18 @@
 <script lang="ts">
-    import BankComponent from './Bank.svelte';
-    import Jumbotron from './Jumbotron.svelte';
-    import Front from './Front.svelte';
-    import Nav from './Nav.svelte';
+    import Nav from './components/Nav.svelte';
     import { onMount } from 'svelte';
-    import type { Bank } from './types';
     import { banks } from './banks';
+    import Router from 'svelte-spa-router';
+    import HomeRoute from './routes/Home.svelte';
+    import BankRoute from './routes/Bank.svelte';
+    import NotFound from './routes/NotFound.svelte';
 
-    let bank: Bank | undefined = undefined;
+    const routes = {
+        '/': HomeRoute,
+        '/banks/:bankSlug': BankRoute,
+        '*': NotFound,
+    }
+
     let loading = true;
     onMount(async () => {
         const res = await fetch(`./bank.json`);
@@ -25,21 +30,14 @@
     });
 </script>
 
-<Nav bind:bank={bank}/>
 
 {#if loading}
+    <Nav/>
     <div class="text-center">
         <h1 class="display-4">Loading ☑️It...</h1>
     </div>
 {:else}
-    {#if bank}
-        <div class="bank">
-            <BankComponent bind:bank={bank}/>
-        </div>
-    {:else}
-        <Jumbotron bind:bank={bank}/>
-        <Front/>
-    {/if}
+    <Router {routes}/>
 {/if}
 
 <style>

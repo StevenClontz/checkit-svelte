@@ -15,3 +15,6 @@ export type Exercise = {
     latex: string 
     html: string
 }
+export type Params = {
+    bankSlug: string
+}
