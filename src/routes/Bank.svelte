@@ -10,10 +10,15 @@
     } from 'sveltestrap';
     import Nav from '../components/Nav.svelte';
     import OutcomeDropdown from '../utils/OutcomeDropdown.svelte';
-    import { banks } from '../banks';
+    import { banks } from '../stores/banks';
+    import type { Outcome } from '../types';
 
     export let params:Params;
-    let bank = $banks.find((b)=>b.slug==params.bankSlug)
+    $: bank = $banks.find((b)=>b.slug==params.bankSlug)
+    let outcome: Outcome | undefined = undefined;
+    $: if (params.outcomeSlug) {
+        outcome = bank.outcomes.find((o)=>o.slug==params.outcomeSlug)
+    }
 </script>
 
 <Nav {bank}/>
@@ -22,11 +27,12 @@
     <h1>{bank.title}</h1>
     {#if bank.outcomes}
         <p>
-            <OutcomeDropdown {bank}/>
+            <OutcomeDropdown {bank} {outcome}/>
         </p>
     {:else}
         <Alert color="warning">No outcomes found for this bank.</Alert>
     {/if}
+    <slot/>
 </Container>
 
 <style>

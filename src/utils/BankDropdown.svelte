@@ -5,7 +5,7 @@
         DropdownMenu,
         DropdownItem,
     } from 'sveltestrap';
-    import { banks } from '../banks';
+    import { banks } from '../stores/banks';
     import type { Bank } from '../types';
 
     export let inNav: boolean = false;
@@ -22,9 +22,9 @@
     </DropdownToggle>
     <DropdownMenu>
         {#each $banks as b}
-            {#if b !== bank}
-                <DropdownItem href="#/banks/{b.slug}">{b.title}</DropdownItem>
-            {/if}
+            <DropdownItem disabled={b===bank} href="#/banks/{b.slug}">
+                {#if b===bank}»{/if} {b.title}
+            </DropdownItem>
         {/each}
         {#if bank}
             {#if $banks.length > 1}

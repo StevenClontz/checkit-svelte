@@ -1,5 +1,5 @@
 import { writable } from 'svelte/store';
-import type { Bank } from './types';
+import type { Bank } from '../types';
 
 let _banks: Array<Bank> = [];
 

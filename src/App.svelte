@@ -1,17 +1,9 @@
 <script lang="ts">
     import Nav from './components/Nav.svelte';
     import { onMount } from 'svelte';
-    import { banks } from './banks';
+    import { banks } from './stores/banks';
     import Router from 'svelte-spa-router';
-    import HomeRoute from './routes/Home.svelte';
-    import BankRoute from './routes/Bank.svelte';
-    import NotFound from './routes/NotFound.svelte';
-
-    const routes = {
-        '/': HomeRoute,
-        '/banks/:bankSlug': BankRoute,
-        '*': NotFound,
-    }
+    import { routes } from './routes';
 
     let loading = true;
     onMount(async () => {

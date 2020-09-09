@@ -6,7 +6,6 @@
         DropdownItem,
     } from 'sveltestrap';
     import type { Bank, Outcome } from '../types';
-    import { banks } from '../banks';
 
     export let bank: Bank;
     export let outcome: Outcome | undefined = undefined;
@@ -15,22 +14,16 @@
 <UncontrolledDropdown>
     <DropdownToggle caret>
         {#if outcome}
-            {outcome.title}
+            {outcome.slug} &mdash; {outcome.title}
         {:else}
             Select a learning outcome:
         {/if}
     </DropdownToggle>
     <DropdownMenu>
-        {#each $banks as b}
-            {#if b !== bank}
-                <DropdownItem href="#/banks/{b.slug}">{b.title}</DropdownItem>
-            {/if}
+        {#each bank.outcomes as o}
+            <DropdownItem disabled={o===outcome} href="#/banks/{bank.slug}/{o.slug}">
+                {#if o===outcome}»{/if} {o.slug} &mdash; {o.title}
+            </DropdownItem>
         {/each}
-        {#if bank}
-            {#if $banks.length > 1}
-                <DropdownItem divider/>
-            {/if}
-            <DropdownItem href="#/">Back to Home</DropdownItem>
-        {/if}
     </DropdownMenu>
 </UncontrolledDropdown>
