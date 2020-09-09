@@ -16,15 +16,19 @@
         }
     }
     const versionStringToInt = (vs:string|undefined) => parseInt(vs || "1")-1
-    const oldPage = versionStringToInt(params.exerciseVersion)
 
     $: bank = $banks.find((b)=>b.slug==params.bankSlug);
     $: outcome = bank.outcomes.find((o)=>o.slug==params.outcomeSlug);
     $: version = versionStringToInt(params.exerciseVersion);
     $: exercise = outcome.exercises[version]
     let hiddenAnswer = true; 
-    let page = oldPage
-    $: if (page !== oldPage) {
+    let page = versionStringToInt(params.exerciseVersion);
+    let outcomeSlug = params.outcomeSlug;
+    $: if (outcomeSlug !== params.outcomeSlug) {
+        page = version;
+        outcomeSlug = params.outcomeSlug;
+    }
+    $: if (page !== version) {
         push(`/banks/${params.bankSlug}/${params.outcomeSlug}/${page+1}`)
     }
 </script>
