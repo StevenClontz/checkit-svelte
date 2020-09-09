@@ -15,6 +15,6 @@ a.page-link {
     min-width: 3em; 
     text-align: center; 
 }
-main {
-    overflow-x: auto;
+.exercise {
+    overflow-x: scroll;
 }

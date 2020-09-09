@@ -28,13 +28,15 @@
 
     let exerciseDiv: Element;
     const decorateAnswer = () => {
-        for (let e of exerciseDiv.getElementsByClassName("exercise-answer")) {
-            e.classList.add("alert");
-            e.classList.add("alert-info");
-            if (hiddenAnswer) {
-                e.classList.add("d-none");
-            } else {
-                e.classList.remove("d-none");
+        if (exerciseDiv) {
+            for (let e of exerciseDiv.getElementsByClassName("exercise-answer")) {
+                e.classList.add("alert");
+                e.classList.add("alert-info");
+                if (hiddenAnswer) {
+                    e.classList.add("d-none");
+                } else {
+                    e.classList.remove("d-none");
+                }
             }
         }
     }
@@ -63,21 +65,21 @@
     <hr/>
 {/if}
 
-<div class="exercise" bind:this={exerciseDiv}>
-    <Row>
+<Row>
+    <Col sm={{ size: 10, offset: 1 }}>
         {#if mode == "display"}
-            <Col>{@html parseMath(exercise.html)}</Col>
+            <div bind:this={exerciseDiv}>{@html parseMath(exercise.html)}</div>
         {:else if mode == "html"}
-            <Col sm={{ size: 10, offset: 1 }}><pre class="pre-scrollable"><code>{exercise.html}</code></pre></Col>
+            <pre class="pre-scrollable"><code>{exercise.html}</code></pre>
         {:else if mode == "tex"}
-            <Col sm={{ size: 10, offset: 1 }}><pre class="pre-scrollable"><code>{exercise.tex}</code></pre></Col>
+            <pre class="pre-scrollable"><code>{exercise.tex}</code></pre>
         {:else if mode == "pretext"}
-            <Col sm={{ size: 10, offset: 1 }}><pre class="pre-scrollable"><code>{exercise.pretext}</code></pre></Col>
+            <pre class="pre-scrollable"><code>{exercise.pretext}</code></pre>
         {:else}
             Invalid mode.
         {/if}
-    </Row>
-</div>
+    </Col>
+</Row>
 
 <style>
     pre {
