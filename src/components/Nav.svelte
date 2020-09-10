@@ -3,6 +3,8 @@
     import {
         Navbar,
         NavbarBrand,
+        NavItem,
+        NavLink,
         Nav,
         Input,
         FormGroup,
@@ -10,6 +12,7 @@
         Collapse,
         NavbarToggler,
     } from 'sveltestrap';
+    import {location} from 'svelte-spa-router';
     import type { Bank } from '../types';
     import { instructorEnabled } from '../stores/instructor';
     
@@ -22,22 +25,25 @@
 
 <Navbar color="primary" dark expand="md">
     <NavbarBrand href="#/">☑️It</NavbarBrand>
-    {#if bank}
-        <NavbarToggler on:click={() => (isOpen = !isOpen)} />
-        <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
-            <Nav navbar>
-                <BankDropdown {bank} inNav/>
-            </Nav>
-            <Nav navbar class="ml-auto">
-                <form class="form-inline">
-                    <FormGroup check>
-                    <Label check class="navbar-text">
-                        <Input readonly={false} type="checkbox" bind:checked={$instructorEnabled} />
-                        Show instructor options
-                    </Label>
-                    </FormGroup>
-                </form>
-            </Nav>
-        </Collapse>
-    {/if}
+    <NavbarToggler on:click={() => (isOpen = !isOpen)} />
+    <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
+        <Nav navbar>
+            <BankDropdown {bank} inNav/>
+            {#if $instructorEnabled}
+                <NavItem>
+                    <NavLink href="#/assessment" active={$location=="/assessment"}>Assessment</NavLink>
+                </NavItem>
+            {/if}
+        </Nav>
+        <Nav navbar class="ml-auto">
+            <form class="form-inline">
+                <FormGroup check>
+                <Label check class="navbar-text">
+                    <Input readonly={false} type="checkbox" bind:checked={$instructorEnabled} />
+                    Show instructor options
+                </Label>
+                </FormGroup>
+            </form>
+        </Nav>
+    </Collapse>
 </Navbar>
