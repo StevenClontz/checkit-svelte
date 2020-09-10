@@ -4,6 +4,7 @@
     import { banks } from './stores/banks';
     import Router from 'svelte-spa-router';
     import { routes } from './routes';
+    import { Spinner } from 'sveltestrap';
 
     let loading = true;
     onMount(async () => {
@@ -27,6 +28,7 @@
     <Nav/>
     <div class="text-center">
         <h1 class="display-4">Loading ☑️It...</h1>
+        <Spinner color="primary" />
     </div>
 {:else}
     <Router {routes}/>
