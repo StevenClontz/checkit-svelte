@@ -2,7 +2,7 @@
     import katex from 'katex';
     import { afterUpdate } from 'svelte';
     import type { Exercise } from '../types';
-    import { instructor } from '../stores/instructor';
+    import { instructorEnabled } from '../stores/instructor';
     import { Nav, NavItem, NavLink, Row, Col } from 'sveltestrap';
 
     export let exercise: Exercise;
@@ -51,7 +51,7 @@
     }
 </script>
 
-{#if $instructor.enabled}
+{#if $instructorEnabled}
     <div class="navtabs">
         <Nav tabs>
             {#each modes as m,i}

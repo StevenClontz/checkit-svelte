@@ -11,7 +11,7 @@
         NavbarToggler,
     } from 'sveltestrap';
     import type { Bank } from '../types';
-    import { instructor } from '../stores/instructor';
+    import { instructorEnabled } from '../stores/instructor';
     
     export let bank: Bank | undefined = undefined;
 
@@ -32,7 +32,7 @@
                 <form class="form-inline">
                     <FormGroup check>
                     <Label check class="navbar-text">
-                        <Input readonly={false} type="checkbox" bind:checked={$instructor.enabled} />
+                        <Input readonly={false} type="checkbox" bind:checked={$instructorEnabled} />
                         Show instructor options
                     </Label>
                     </FormGroup>
