@@ -16,5 +16,5 @@ a.page-link {
     text-align: center; 
 }
 .exercise {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
