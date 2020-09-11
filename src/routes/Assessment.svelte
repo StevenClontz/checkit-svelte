@@ -3,15 +3,25 @@
         Container,
         Row,
         Col,
+        Button,
+        Input,
     } from 'sveltestrap';
     import BankDropdown from '../utils/BankDropdown.svelte';
     import DragDropList from 'svelte-dragdroplist';
     import Nav from '../components/Nav.svelte';
-    import { assessmentOutcomes } from '../stores/instructor';
-    let ddList = $assessmentOutcomes.map((o)=>{
-        return {'text': o.title,'outcome': o}
-    })
-    $: $assessmentOutcomes = ddList.map((l)=>l.outcome)
+    import { assessmentOutcomeRefs } from '../stores/instructor';
+    import { banks } from '../stores/banks';
+    import { refToOutcome } from '../utils';
+
+    let ddList = $assessmentOutcomeRefs.map((ref)=>{
+        let o = refToOutcome(ref,$banks);
+        return {
+            'text': ref.bankSlug + "/" + ref.outcomeSlug + " — " + o.title,
+            'outcomeRef': ref
+        }
+    });
+    $: $assessmentOutcomeRefs = ddList.map((l)=>l.outcomeRef);
+    let generatedAssessment = "";
 </script>
 
 <Nav/>
@@ -37,10 +47,29 @@
                 </div>
             </Col>
         </Row>
+        <Row>
+            <Col>
+                <p>
+                    Clicking "Generate" will choose a random exercise assessing
+                    each outcome and write a LaTeX file below.
+                </p>
+                <p class="text-center">
+                    <Button color="success">Generate</Button>
+                </p>
+                <p>
+                    <Input type="textarea" readonly value={generatedAssessment} />
+                </p>
+            </Col>
+        </Row>
     </Container>
 </main>
 
 <style>
     h1 { margin-top:0.5em }
-    .outcome-ordering { border: 1px #888 solid; border-radius: 5px; padding: 10px;}
+    .outcome-ordering {
+        border: 1px #888 solid; 
+        border-radius: 5px; 
+        padding: 10px; 
+        margin-bottom: 1em;
+    }
 </style>

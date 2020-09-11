@@ -14,7 +14,7 @@
 <UncontrolledDropdown>
     <DropdownToggle caret>
         {#if outcome}
-            {outcome.slug} &mdash; {outcome.title}
+            {outcome.slug} — {outcome.title}
         {:else}
             Select a learning outcome:
         {/if}
@@ -22,7 +22,7 @@
     <DropdownMenu>
         {#each bank.outcomes as o}
             <DropdownItem disabled={o===outcome} href="#/banks/{bank.slug}/{o.slug}">
-                {#if o===outcome}»{/if} {o.slug} &mdash; {o.title}
+                {#if o===outcome}»{/if} {o.slug} — {o.title}
             </DropdownItem>
         {/each}
     </DropdownMenu>

@@ -1,10 +1,10 @@
 <script lang="ts">
     import Pagination from '../components/Pagination.svelte';
     import Exercise from '../components/Exercise.svelte';
-    import type { Params, Outcome } from '../types';
+    import type { Params } from '../types';
     import { Button } from 'sveltestrap';
     import { banks } from '../stores/banks';
-    import { instructorEnabled, assessmentOutcomes } from '../stores/instructor';
+    import { instructorEnabled, assessmentOutcomeRefs } from '../stores/instructor';
     import Bank from './Bank.svelte';
     import { push } from 'svelte-spa-router';
 
@@ -20,6 +20,7 @@
 
     $: bank = $banks.find((b)=>b.slug==params.bankSlug);
     $: outcome = bank.outcomes.find((o)=>o.slug==params.outcomeSlug);
+    $: outcomeRef = {'bankSlug': bank.slug, 'outcomeSlug': outcome.slug}
     $: version = versionStringToInt(params.exerciseVersion);
     $: exercise = outcome.exercises[version]
     let hiddenAnswer = true; 
@@ -32,12 +33,14 @@
     $: if (page !== version) {
         push(`/banks/${params.bankSlug}/${params.outcomeSlug}/${page+1}`)
     }
-    $: inAssessment = $assessmentOutcomes.includes(outcome)
+    $: inAssessment = $assessmentOutcomeRefs.includes(outcomeRef)
     const toggleAssessment = () => {
         if (inAssessment) {
-            $assessmentOutcomes = $assessmentOutcomes.filter((o) => o!==outcome)
+            $assessmentOutcomeRefs = $assessmentOutcomeRefs.filter(
+                (ref) => ref!==outcomeRef
+            )
         } else {
-            $assessmentOutcomes = [...$assessmentOutcomes, outcome]
+            $assessmentOutcomeRefs = [...$assessmentOutcomeRefs, outcomeRef]
         }
     }
 </script>
