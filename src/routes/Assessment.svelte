@@ -7,31 +7,83 @@
     } from 'sveltestrap';
     import BankDropdown from '../components/dropdowns/Bank.svelte';
     import Exercise from '../components/Exercise.svelte';
-    import DragDropList from 'svelte-dragdroplist';
+    import Sorter from '../components/Sorter.svelte';
     import Nav from '../components/Nav.svelte';
     import { assessmentOutcomeRefs } from '../stores/instructor';
     import { banks } from '../stores/banks';
     import { refToOutcome, sample } from '../utils';
+    import type { OutcomeRef } from '../types';
 
-    let ddList = $assessmentOutcomeRefs.map((ref)=>{
+    const display = (ref:OutcomeRef) => {
         let o = refToOutcome(ref,$banks);
-        return {
-            'text': ref.bankSlug + "/" + ref.outcomeSlug + " — " + o.title,
-            'outcomeRef': ref
-        }
-    });
-    $: $assessmentOutcomeRefs = ddList.map((l)=>l.outcomeRef);
+        return `${ref.bankSlug}/${ref.outcomeSlug} — ${o.title}`
+    };
     let generatedAssessment = "";
     let generatedExercises = [];
+    const assessmentPrefix = `
+\\documentclass[11pt]{exam}
+\\usepackage{amsfonts,amssymb,amsmath, amsthm}
+\\usepackage{enumerate}
+\\pagestyle{headandfoot}
+\\firstpageheader{\\assessmentTitle \\hspace{2.5em} \\today}{}{Name: \\underline{\\hspace{2.5in}}}
+%\\firstpageheadrule
+\\runningheader{\\assessmentTitle}{}{Page \\thepage\\ of \\numpages}
+\\runningheadrule
+\\firstpagefooter{}{}{}
+\\runningfooter{}{}{}
+\\newenvironment{exerciseStatement}{\\question}{}
+\\newenvironment{exerciseAnswer}{\\begin{solution}}{\\end{solution}\\vfill}
+
+
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                          Edit settings                         %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+\\newcommand{\\assessmentTitle}{
+CheckIt Assessment
+}
+\\newcommand{\\assessmentInstructions}{
+Do not use any unapproved aids while taking this assessment.
+Read each question carefully and be sure to show all work
+in the space provided.
+}
+%\\printanswers % uncomment to show answers
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+
+
+
+\\begin{document}
+
+\\begin{center}
+\\fbox{\\fbox{\\parbox{6in}{\\centering\\assessmentInstructions}}}
+\\end{center}
+
+\\begin{questions}
+
+`
+    const assessmentSuffix = `
+
+\\end{questions}
+
+\\end{document}
+`
     const generate = () => {
-        generatedAssessment = "";
+        generatedAssessment = assessmentPrefix;
         generatedExercises = [];
-        for (let ref of $assessmentOutcomeRefs) {
+        $assessmentOutcomeRefs.forEach( (ref,i) => {
             let o = refToOutcome(ref,$banks);
             let e = sample(o.exercises);
             generatedAssessment = generatedAssessment + "\n\n" + e.tex;
+            if (i%2===1) {
+                generatedAssessment = generatedAssessment + "\n\n\\newpage\n\n";
+            }
             generatedExercises = [...generatedExercises, e];
-        }
+        })
+        generatedAssessment = generatedAssessment + assessmentSuffix;
         generatedAssessment = generatedAssessment.trim()
     }
 </script>
@@ -55,7 +107,7 @@
             </Col>
             <Col sm="8">
                 <div class="outcome-ordering">
-                    <DragDropList bind:data={ddList} removesItems/>
+                    <Sorter bind:array={$assessmentOutcomeRefs} {display} removesItems/>
                 </div>
             </Col>
         </Row>
@@ -66,12 +118,23 @@
                     each outcome and write a LaTeX file below.
                 </p>
                 <p class="text-center">
-                    <Button color="success" on:click={generate}>Generate</Button>
-                </p>
-                <p>
-                    <textarea class="form-control" rows="4" readonly value={generatedAssessment} />
+                    <Button color="primary" on:click={generate}>Generate</Button>
                 </p>
                 {#if generatedExercises.length > 0}
+                    <form action="https://www.overleaf.com/docs" method="post" target="_blank">
+                        <p>
+                            <textarea
+                                name="snip"
+                                class="form-control text-monospace"
+                                rows="4"
+                                readonly
+                                value={generatedAssessment}
+                            />
+                        </p>
+                        <p class="text-center">
+                            <input class="btn btn-success" type="submit" value="Open PDF using Overleaf.com"/>
+                        </p>
+                    </form>
                     <h3>Preview</h3>
                     {#each generatedExercises as exercise,i}
                         <h4>Exercise {i+1}</h4>
