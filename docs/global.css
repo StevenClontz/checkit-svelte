@@ -1,6 +1,7 @@
 .dropdown-menu {
     max-height:50vh;
-    overflow-y:auto;
+    max-width:85vw;
+    overflow:auto;
 }
 .jumbotron {
     border-radius: 0;
@@ -16,5 +17,5 @@ a.page-link {
     text-align: center; 
 }
 .exercise {
-    overflow-x: scroll;
+    overflow-x: auto;
 }
