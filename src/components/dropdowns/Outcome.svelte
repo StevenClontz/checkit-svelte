@@ -5,7 +5,7 @@
         DropdownMenu,
         DropdownItem,
     } from 'sveltestrap';
-    import type { Bank, Outcome } from '../types';
+    import type { Bank, Outcome } from '../../types';
 
     export let bank: Bank;
     export let outcome: Outcome | undefined = undefined;

@@ -1,5 +1,5 @@
 <script lang="ts">
-    import BankDropdown from '../utils/BankDropdown.svelte';
+    import BankDropdown from './dropdowns/Bank.svelte';
     import {
         Navbar,
         NavbarBrand,

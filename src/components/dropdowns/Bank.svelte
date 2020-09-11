@@ -5,8 +5,8 @@
         DropdownMenu,
         DropdownItem,
     } from 'sveltestrap';
-    import { banks } from '../stores/banks';
-    import type { Bank } from '../types';
+    import { banks } from '../../stores/banks';
+    import type { Bank } from '../../types';
 
     export let inNav: boolean = false;
     export let bank: Bank | undefined = undefined;

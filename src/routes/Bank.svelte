@@ -1,15 +1,11 @@
 <script lang="ts">
     import type {Params} from '../types';
     import {
-        UncontrolledDropdown,
-        DropdownToggle,
-        DropdownMenu,
-        DropdownItem,
         Container,
         Alert,
     } from 'sveltestrap';
     import Nav from '../components/Nav.svelte';
-    import OutcomeDropdown from '../utils/OutcomeDropdown.svelte';
+    import OutcomeDropdown from '../components/dropdowns/Outcome.svelte';
     import { banks } from '../stores/banks';
     import type { Outcome } from '../types';
 

@@ -6,7 +6,7 @@
         Button,
         Input,
     } from 'sveltestrap';
-    import BankDropdown from '../utils/BankDropdown.svelte';
+    import BankDropdown from '../components/dropdowns/Bank.svelte';
     import DragDropList from 'svelte-dragdroplist';
     import Nav from '../components/Nav.svelte';
     import { assessmentOutcomeRefs } from '../stores/instructor';

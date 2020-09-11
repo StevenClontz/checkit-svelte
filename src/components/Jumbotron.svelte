@@ -3,7 +3,7 @@
         Container,
         Jumbotron,
     } from 'sveltestrap';
-    import BankDropdown from '../utils/BankDropdown.svelte';
+    import BankDropdown from './dropdowns/Bank.svelte';
 </script>
 
 <Jumbotron>
