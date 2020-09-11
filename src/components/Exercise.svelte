@@ -6,7 +6,8 @@
     import { Nav, NavItem, NavLink, Row, Col } from 'sveltestrap';
 
     export let exercise: Exercise;
-    export let hiddenAnswer: boolean;
+    export let hiddenAnswer: boolean=true;
+    export let statementOnly: boolean=false;
 
     let inlineMathRe = /\\\((.*?)\\\)/gs;
     let displayMathRe = /\\\[(.*?)\\\]/gs;
@@ -32,7 +33,7 @@
             for (let e of exerciseDiv.getElementsByClassName("exercise-answer")) {
                 e.classList.add("alert");
                 e.classList.add("alert-info");
-                if (hiddenAnswer) {
+                if (hiddenAnswer || !statementOnly) {
                     e.classList.add("d-none");
                 } else {
                     e.classList.remove("d-none");
@@ -51,18 +52,25 @@
     }
 </script>
 
-{#if $instructorEnabled}
-    <div class="navtabs">
-        <Nav tabs>
-            {#each modes as m,i}
-                <NavItem>
-                    <NavLink active={mode==m} on:click={changeMode(m)} href="#/">{modeLabels[i]}</NavLink>
-                </NavItem>
-            {/each}
-        </Nav>
-    </div>
-{:else}
-    <hr/>
+{#if !statementOnly}
+    {#if $instructorEnabled}
+        <div class="navtabs">
+            <Nav tabs>
+                {#each modes as m,i}
+                    <NavItem>
+                        <NavLink 
+                            active={mode==m} 
+                            on:click={changeMode(m)} 
+                            href="#/">
+                            {modeLabels[i]}
+                        </NavLink>
+                    </NavItem>
+                {/each}
+            </Nav>
+        </div>
+    {:else}
+        <hr/>
+    {/if}
 {/if}
 
 <Row>

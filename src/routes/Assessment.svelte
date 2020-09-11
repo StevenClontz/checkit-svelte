@@ -4,14 +4,14 @@
         Row,
         Col,
         Button,
-        Input,
     } from 'sveltestrap';
     import BankDropdown from '../components/dropdowns/Bank.svelte';
+    import Exercise from '../components/Exercise.svelte';
     import DragDropList from 'svelte-dragdroplist';
     import Nav from '../components/Nav.svelte';
     import { assessmentOutcomeRefs } from '../stores/instructor';
     import { banks } from '../stores/banks';
-    import { refToOutcome } from '../utils';
+    import { refToOutcome, sample } from '../utils';
 
     let ddList = $assessmentOutcomeRefs.map((ref)=>{
         let o = refToOutcome(ref,$banks);
@@ -22,6 +22,18 @@
     });
     $: $assessmentOutcomeRefs = ddList.map((l)=>l.outcomeRef);
     let generatedAssessment = "";
+    let generatedExercises = [];
+    const generate = () => {
+        generatedAssessment = "";
+        generatedExercises = [];
+        for (let ref of $assessmentOutcomeRefs) {
+            let o = refToOutcome(ref,$banks);
+            let e = sample(o.exercises);
+            generatedAssessment = generatedAssessment + "\n\n" + e.tex;
+            generatedExercises = [...generatedExercises, e];
+        }
+        generatedAssessment = generatedAssessment.trim()
+    }
 </script>
 
 <Nav/>
@@ -54,11 +66,18 @@
                     each outcome and write a LaTeX file below.
                 </p>
                 <p class="text-center">
-                    <Button color="success">Generate</Button>
+                    <Button color="success" on:click={generate}>Generate</Button>
                 </p>
                 <p>
-                    <Input type="textarea" readonly value={generatedAssessment} />
+                    <textarea class="form-control" rows="4" readonly value={generatedAssessment} />
                 </p>
+                {#if generatedExercises.length > 0}
+                    <h3>Preview</h3>
+                    {#each generatedExercises as exercise,i}
+                        <h4>Exercise {i+1}</h4>
+                        <Exercise {exercise} statementOnly/>
+                    {/each}
+                {/if}
             </Col>
         </Row>
     </Container>
