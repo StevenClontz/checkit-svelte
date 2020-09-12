@@ -33,7 +33,7 @@
             for (let e of exerciseDiv.getElementsByClassName("exercise-answer")) {
                 e.classList.add("alert");
                 e.classList.add("alert-info");
-                if (hiddenAnswer || !statementOnly) {
+                if (hiddenAnswer || statementOnly) {
                     e.classList.add("d-none");
                 } else {
                     e.classList.remove("d-none");
