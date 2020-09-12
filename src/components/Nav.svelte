@@ -31,7 +31,9 @@
             <BankDropdown {bank} inNav/>
             {#if $instructorEnabled}
                 <NavItem>
-                    <NavLink href="#/assessment" active={$location=="/assessment"}>Assessment</NavLink>
+                    <NavLink href="#/assessment" active={$location=="/assessment"}>
+                        Assessment Builder
+                    </NavLink>
                 </NavItem>
             {/if}
         </Nav>

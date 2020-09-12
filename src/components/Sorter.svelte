@@ -6,10 +6,11 @@
     export let removesItems = true;
     export let display = (element:any) => element;
 
-    let ddArray = array.map((item)=>{
+    let ddArray = array.map((item,i)=>{
         return {
             'text': display(item),
             'item': item,
+            'id': i,
         }
     });
     $: array = ddArray.map((i)=>i.item);

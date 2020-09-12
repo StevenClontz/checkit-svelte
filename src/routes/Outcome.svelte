@@ -2,11 +2,12 @@
     import Pagination from '../components/Pagination.svelte';
     import Exercise from '../components/Exercise.svelte';
     import type { Params } from '../types';
-    import { Button } from 'sveltestrap';
+    import { Button, Row, Col } from 'sveltestrap';
     import { banks } from '../stores/banks';
     import { instructorEnabled, assessmentOutcomeRefs } from '../stores/instructor';
     import Bank from './Bank.svelte';
     import { push } from 'svelte-spa-router';
+    import { sameRefs } from '../utils';
 
     export let params:Params;
 
@@ -31,17 +32,20 @@
         outcomeSlug = params.outcomeSlug;
     }
     $: if (page !== version) {
-        push(`/banks/${params.bankSlug}/${params.outcomeSlug}/${page+1}`)
+        push(`/banks/${params.bankSlug}/${params.outcomeSlug}/${page+1}`);
     }
-    $: inAssessment = $assessmentOutcomeRefs.includes(outcomeRef)
-    const toggleAssessment = () => {
-        if (inAssessment) {
-            $assessmentOutcomeRefs = $assessmentOutcomeRefs.filter(
-                (ref) => ref!==outcomeRef
-            )
-        } else {
-            $assessmentOutcomeRefs = [...$assessmentOutcomeRefs, outcomeRef]
-        }
+    $: countInAssessment = $assessmentOutcomeRefs.filter(r=>sameRefs(r,outcomeRef)).length
+    const addToAssessment = () => {
+        $assessmentOutcomeRefs = [...$assessmentOutcomeRefs, outcomeRef]
+    }
+    const removeFromAssessment = () => {
+        let i = $assessmentOutcomeRefs
+            .map(r=>sameRefs(r,outcomeRef))
+            .lastIndexOf(true)
+        $assessmentOutcomeRefs = [
+            ...$assessmentOutcomeRefs.slice(0, i),
+            ...$assessmentOutcomeRefs.slice(i + 1)
+        ]
     }
 </script>
 
@@ -59,22 +63,38 @@
         <Pagination bind:page={page} pages={outcome.exercises.length}/>
     </div>
     
-    <p>
-        <Button color="info" outline={!hiddenAnswer} on:click={toggleAnswer}>
-            {#if hiddenAnswer}Show{:else}Hide{/if} Answer
-        </Button>
-        {#if $instructorEnabled }
-            <Button color={inAssessment ? "success" : "secondary"}
-                outline={!inAssessment}
-                on:click={toggleAssessment}>
-                {#if inAssessment}
-                    Included in assessment.
-                {:else}
-                    Not included in assessment.
-                {/if}
+    <Row>
+        <Col xs="auto">
+            <Button color="info" outline={!hiddenAnswer} on:click={toggleAnswer}>
+                {#if hiddenAnswer}Show{:else}Hide{/if} Answer
             </Button>
+        </Col>
+        {#if $instructorEnabled }
+            <Col xs="auto">
+                <span># Included in Assessment:</span>
+                <div class="btn-group ml-2" role="group">
+                    <Button
+                        color="success" 
+                        disabled={countInAssessment<1} 
+                        on:click={removeFromAssessment}>
+                        -
+                    </Button>
+                    <Button
+                        color="success"
+                        outline>
+                        {countInAssessment}
+                    </Button>
+                    <Button
+                        color="success" 
+                        on:click={addToAssessment}>
+                        +
+                    </Button>
+                </div>
+            </Col>
         {/if}
-    </p>
+    </Row>
     
-    <Exercise {hiddenAnswer} {exercise}/>
+    <div class="mt-2">
+        <Exercise {hiddenAnswer} {exercise}/>
+    </div>
 </Bank>

@@ -117,9 +117,11 @@ in the space provided.
                     Clicking "Generate" will choose a random exercise assessing
                     each outcome and write a LaTeX file below.
                 </p>
-                <p class="text-center">
-                    <Button color="primary" on:click={generate}>Generate</Button>
-                </p>
+                {#if generatedExercises.length == 0}
+                    <p class="text-center">
+                        <Button color="primary" on:click={generate}>Generate</Button>
+                    </p>
+                {/if}
                 {#if generatedExercises.length > 0}
                     <form action="https://www.overleaf.com/docs" method="post" target="_blank">
                         <p>
@@ -135,6 +137,9 @@ in the space provided.
                             <input class="btn btn-success" type="submit" value="Open PDF using Overleaf.com"/>
                         </p>
                     </form>
+                    <p class="text-center">
+                        <Button color="primary" outline on:click={generate}>Re-generate</Button>
+                    </p>
                     <h3>Preview</h3>
                     {#each generatedExercises as exercise,i}
                         <h4>Exercise {i+1}</h4>
