@@ -4,6 +4,10 @@
         Row,
         Col,
         Button,
+        UncontrolledDropdown,
+        DropdownToggle,
+        DropdownMenu,
+        DropdownItem,
     } from 'sveltestrap';
     import BankDropdown from '../components/dropdowns/Bank.svelte';
     import Exercise from '../components/Exercise.svelte';
@@ -86,32 +90,40 @@
                             />
                         </p>
                     </form>
-                    <p class="text-center">
-                        <input
-                            class="btn btn-success"
-                            type="button"
-                            value="Open PDF using Overleaf.com"
-                            on:click={openInOverleaf}/>
-                        <input
-                            class="btn btn-info"
-                            type="button"
-                            value="Copy LaTeX to clipboard 📋"
-                            on:click={copyToClipboard(generatedAssessment.tex)}/>
-                    </p>
                 {/if}
-                <p class="text-center">
-                    <Button
-                        color="primary"
-                        disabled={$assessmentOutcomeRefs.length < 1}
-                        outline={generatedAssessment !== undefined}
-                        on:click={generate}>
-                        {#if generatedAssessment}
-                            Re-generate
-                            {:else}
-                            Generate
-                        {/if}
-                    </Button>
-                </p>
+                <Row>
+                    <Col xs="auto">
+                        <Button
+                            color="primary"
+                            disabled={$assessmentOutcomeRefs.length < 1}
+                            outline={generatedAssessment !== undefined}
+                            on:click={generate}>
+                            {#if generatedAssessment}
+                                Re-generate
+                                {:else}
+                                Generate
+                            {/if}
+                        </Button>
+                    </Col>  
+                    {#if generatedAssessment}
+                        <Col xs="auto">
+                            <UncontrolledDropdown>
+                                <DropdownToggle caret>
+                                    Export:
+                                </DropdownToggle>
+                                <DropdownMenu>
+                                    <DropdownItem on:click={openInOverleaf}>
+                                        Open PDF using Overleaf.com
+                                    </DropdownItem>
+                                    <DropdownItem
+                                        on:click={copyToClipboard(generatedAssessment.tex)}>
+                                        Copy LaTeX to clipboard 📋
+                                    </DropdownItem>
+                                </DropdownMenu>
+                            </UncontrolledDropdown>
+                        </Col>
+                    {/if}
+                </Row>
                 {#if generatedAssessment}
                     <h3>Preview</h3>
                     {#each generatedAssessment.exercises as exercise,i}
