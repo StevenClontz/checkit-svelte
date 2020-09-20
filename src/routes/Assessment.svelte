@@ -11,82 +11,17 @@
     import Nav from '../components/Nav.svelte';
     import { assessmentOutcomeRefs, instructorEnabled } from '../stores/instructor';
     import { banks } from '../stores/banks';
-    import { refToOutcome, sample } from '../utils';
-    import type { OutcomeRef } from '../types';
+    import { refToOutcome, refsToAssessment } from '../utils';
+    import type { OutcomeRef, Assessment } from '../types';
 
     $instructorEnabled = true
     const display = (ref:OutcomeRef) => {
         let o = refToOutcome(ref,$banks);
         return `${ref.bankSlug}/${ref.outcomeSlug} — ${o.title}`
     };
-    let generatedAssessment = "";
-    let generatedExercises = [];
-    const assessmentPrefix = `
-\\documentclass[11pt]{exam}
-\\usepackage{amsfonts,amssymb,amsmath, amsthm}
-\\usepackage{enumerate}
-\\pagestyle{headandfoot}
-\\firstpageheader{\\assessmentTitle \\hspace{2.5em} \\today}{}{Name: \\underline{\\hspace{2.5in}}}
-%\\firstpageheadrule
-\\runningheader{\\assessmentTitle}{}{Page \\thepage\\ of \\numpages}
-\\runningheadrule
-\\firstpagefooter{}{}{}
-\\runningfooter{}{}{}
-\\newenvironment{exerciseStatement}{\\question}{}
-\\newenvironment{exerciseAnswer}{\\begin{solution}}{\\end{solution}\\vfill}
+    let generatedAssessment: Assessment | undefined = undefined
+    const generate = () => generatedAssessment = refsToAssessment($assessmentOutcomeRefs,$banks)
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                          Edit settings                         %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-\\newcommand{\\assessmentTitle}{
-CheckIt Assessment
-}
-\\newcommand{\\assessmentInstructions}{
-Do not use any unapproved aids while taking this assessment.
-Read each question carefully and be sure to show all work
-in the space provided.
-}
-%\\printanswers % uncomment to show answers
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-
-
-
-\\begin{document}
-
-\\begin{center}
-\\fbox{\\fbox{\\parbox{6in}{\\centering\\assessmentInstructions}}}
-\\end{center}
-
-\\begin{questions}
-
-`
-    const assessmentSuffix = `
-
-\\end{questions}
-
-\\end{document}
-`
-    const generate = () => {
-        generatedAssessment = assessmentPrefix;
-        generatedExercises = [];
-        $assessmentOutcomeRefs.forEach( (ref,i) => {
-            let o = refToOutcome(ref,$banks);
-            let e = sample(o.exercises);
-            generatedAssessment = generatedAssessment + "\n\n" + e.tex;
-            if (i%2===1) {
-                generatedAssessment = generatedAssessment + "\n\n\\newpage\n\n";
-            }
-            generatedExercises = [...generatedExercises, e];
-        })
-        generatedAssessment = generatedAssessment + assessmentSuffix;
-        generatedAssessment = generatedAssessment.trim()
-    }
     const copyToClipboard = (text:string) => () => {
         navigator.clipboard.writeText(text)
         alert("Copied to clipboard!")
@@ -139,7 +74,7 @@ in the space provided.
                     Clicking "Generate" will choose a random exercise assessing
                     each outcome and write a LaTeX file below.
                 </p>
-                {#if generatedExercises.length > 0}
+                {#if generatedAssessment}
                     <form bind:this={latexForm}>
                         <p>
                             <textarea
@@ -147,7 +82,7 @@ in the space provided.
                                 class="form-control text-monospace"
                                 rows="4"
                                 readonly
-                                value={generatedAssessment}
+                                value={generatedAssessment.tex}
                             />
                         </p>
                     </form>
@@ -161,25 +96,25 @@ in the space provided.
                             class="btn btn-info"
                             type="button"
                             value="Copy LaTeX to clipboard 📋"
-                            on:click={copyToClipboard(generatedAssessment)}/>
+                            on:click={copyToClipboard(generatedAssessment.tex)}/>
                     </p>
                 {/if}
                 <p class="text-center">
                     <Button
                         color="primary"
                         disabled={$assessmentOutcomeRefs.length < 1}
-                        outline={generatedExercises.length > 0}
+                        outline={generatedAssessment !== undefined}
                         on:click={generate}>
-                        {#if generatedExercises.length < 1}
-                            Generate
-                        {:else}
+                        {#if generatedAssessment}
                             Re-generate
+                            {:else}
+                            Generate
                         {/if}
                     </Button>
                 </p>
-                {#if generatedExercises.length > 0}
+                {#if generatedAssessment}
                     <h3>Preview</h3>
-                    {#each generatedExercises as exercise,i}
+                    {#each generatedAssessment.exercises as exercise,i}
                         <h4>Exercise {i+1}</h4>
                         <Exercise {exercise} statementOnly/>
                     {/each}

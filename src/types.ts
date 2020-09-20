@@ -24,3 +24,7 @@ export type OutcomeRef = {
     bankSlug: string;
     outcomeSlug: string;
 }
+export type Assessment = {
+    exercises: Exercise[]
+    tex: string
+}
