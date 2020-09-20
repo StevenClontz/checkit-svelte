@@ -15,11 +15,10 @@ export const sameRefs = (o0:OutcomeRef,o1:OutcomeRef) => {
 export const refsToAssessment = (refs:OutcomeRef[],banks:Bank[]) => {
     const assessmentPrefix = `
 \\documentclass[11pt]{exam}
-\\usepackage{amsfonts,amssymb,amsmath, amsthm}
+\\usepackage{amsfonts,amssymb,amsmath,amsthm}
 \\usepackage{enumerate}
 \\pagestyle{headandfoot}
-\\firstpageheader{\\assessmentTitle \\hspace{2.5em} \\today}{}{Name: \\underline{\\hspace{2.5in}}}
-%\\firstpageheadrule
+\\firstpageheader{\\assessmentTitle \\hspace{2em} \\assessmentVersion}{}{Name: \\underline{\\hspace{2.5in}}}
 \\runningheader{\\assessmentTitle}{}{Page \\thepage\\ of \\numpages}
 \\runningheadrule
 \\firstpagefooter{}{}{}
@@ -36,6 +35,9 @@ export const refsToAssessment = (refs:OutcomeRef[],banks:Bank[]) => {
 
 \\newcommand{\\assessmentTitle}{
 CheckIt Assessment
+}
+\\newcommand{\\assessmentVersion}{
+Version ${Date.now()}
 }
 \\newcommand{\\assessmentInstructions}{
 Do not use any unapproved aids while taking this assessment.

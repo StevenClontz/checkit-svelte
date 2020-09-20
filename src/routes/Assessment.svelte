@@ -66,7 +66,7 @@
                         <a 
                             href="#."
                             on:click|preventDefault={()=>$assessmentOutcomeRefs=[]}>
-                            Reset outcomes.
+                            [Reset outcomes]
                         </a>
                     {/if}
                 </div>
@@ -91,8 +91,8 @@
                         </p>
                     </form>
                 {/if}
-                <Row>
-                    <Col xs="auto">
+                <Row class="mb-2">
+                    <Col xs="auto" class="ml-auto">
                         <Button
                             color="primary"
                             disabled={$assessmentOutcomeRefs.length < 1}
@@ -105,8 +105,8 @@
                             {/if}
                         </Button>
                     </Col>  
-                    {#if generatedAssessment}
-                        <Col xs="auto">
+                    <Col xs="auto" class="mr-auto">
+                        {#if generatedAssessment}
                             <UncontrolledDropdown>
                                 <DropdownToggle caret>
                                     Export:
@@ -117,12 +117,12 @@
                                     </DropdownItem>
                                     <DropdownItem
                                         on:click={copyToClipboard(generatedAssessment.tex)}>
-                                        Copy LaTeX to clipboard 📋
+                                        Copy LaTeX to your clipboard 📋
                                     </DropdownItem>
                                 </DropdownMenu>
                             </UncontrolledDropdown>
-                        </Col>
-                    {/if}
+                        {/if}
+                    </Col>
                 </Row>
                 {#if generatedAssessment}
                     <h3>Preview</h3>
