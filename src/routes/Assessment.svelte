@@ -87,9 +87,16 @@ in the space provided.
         generatedAssessment = generatedAssessment + assessmentSuffix;
         generatedAssessment = generatedAssessment.trim()
     }
-    const copyToClipboard = (text:string) => {
+    const copyToClipboard = (text:string) => () => {
         navigator.clipboard.writeText(text)
         alert("Copied to clipboard!")
+    }
+    let latexForm: HTMLFormElement
+    const openInOverleaf = () => {
+        latexForm.target = "_blank"
+        latexForm.action = "https://www.overleaf.com/docs"
+        latexForm.method = "POST"
+        latexForm.submit()
     }
 </script>
 
@@ -133,7 +140,7 @@ in the space provided.
                     each outcome and write a LaTeX file below.
                 </p>
                 {#if generatedExercises.length > 0}
-                    <form action="https://www.overleaf.com/docs" method="post" target="_blank">
+                    <form bind:this={latexForm}>
                         <p>
                             <textarea
                                 name="snip"
@@ -143,19 +150,19 @@ in the space provided.
                                 value={generatedAssessment}
                             />
                         </p>
-                        <p class="text-center">
-                            <input
-                                class="btn btn-success"
-                                type="submit"
-                                value="Open PDF using Overleaf.com"/>
-                            <input
-                                class="btn btn-info"
-                                type="button"
-                                value="Copy LaTeX to clipboard 📋"
-                                on:click={()=>copyToClipboard(generatedAssessment)}
-                                />
-                        </p>
                     </form>
+                    <p class="text-center">
+                        <input
+                            class="btn btn-success"
+                            type="button"
+                            value="Open PDF using Overleaf.com"
+                            on:click={openInOverleaf}/>
+                        <input
+                            class="btn btn-info"
+                            type="button"
+                            value="Copy LaTeX to clipboard 📋"
+                            on:click={copyToClipboard(generatedAssessment)}/>
+                    </p>
                 {/if}
                 <p class="text-center">
                     <Button
