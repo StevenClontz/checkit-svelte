@@ -108,7 +108,17 @@ in the space provided.
             </Col>
             <Col sm="8">
                 <div class="outcome-ordering">
+                    {#if $assessmentOutcomeRefs.length < 1}
+                        (Add outcomes for your assessment.)
+                    {/if}
                     <Sorter bind:array={$assessmentOutcomeRefs} {display} removesItems/>
+                    {#if $assessmentOutcomeRefs.length > 0}
+                        <a 
+                            href="#."
+                            on:click|preventDefault={()=>$assessmentOutcomeRefs=[]}>
+                            Reset outcomes.
+                        </a>
+                    {/if}
                 </div>
             </Col>
         </Row>
@@ -118,11 +128,6 @@ in the space provided.
                     Clicking "Generate" will choose a random exercise assessing
                     each outcome and write a LaTeX file below.
                 </p>
-                {#if generatedExercises.length == 0}
-                    <p class="text-center">
-                        <Button color="primary" on:click={generate}>Generate</Button>
-                    </p>
-                {/if}
                 {#if generatedExercises.length > 0}
                     <form action="https://www.overleaf.com/docs" method="post" target="_blank">
                         <p>
@@ -138,9 +143,17 @@ in the space provided.
                             <input class="btn btn-success" type="submit" value="Open PDF using Overleaf.com"/>
                         </p>
                     </form>
-                    <p class="text-center">
-                        <Button color="primary" outline on:click={generate}>Re-generate</Button>
-                    </p>
+                {/if}
+                <p class="text-center">
+                    <Button
+                        color="primary"
+                        disabled={$assessmentOutcomeRefs.length < 1}
+                        outline={generatedExercises.length > 0}
+                        on:click={generate}>
+                        Generate
+                    </Button>
+                </p>
+                {#if generatedExercises.length > 0}
                     <h3>Preview</h3>
                     {#each generatedExercises as exercise,i}
                         <h4>Exercise {i+1}</h4>
@@ -159,5 +172,7 @@ in the space provided.
         border-radius: 5px; 
         padding: 10px; 
         margin-bottom: 1em;
+        color: gray;
+        text-align: center;
     }
 </style>
