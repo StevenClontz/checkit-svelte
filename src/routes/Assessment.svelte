@@ -87,6 +87,10 @@ in the space provided.
         generatedAssessment = generatedAssessment + assessmentSuffix;
         generatedAssessment = generatedAssessment.trim()
     }
+    const copyToClipboard = (text:string) => {
+        navigator.clipboard.writeText(text)
+        alert("Copied to clipboard!")
+    }
 </script>
 
 <Nav/>
@@ -140,7 +144,16 @@ in the space provided.
                             />
                         </p>
                         <p class="text-center">
-                            <input class="btn btn-success" type="submit" value="Open PDF using Overleaf.com"/>
+                            <input
+                                class="btn btn-success"
+                                type="submit"
+                                value="Open PDF using Overleaf.com"/>
+                            <input
+                                class="btn btn-info"
+                                type="button"
+                                value="Copy LaTeX to clipboard 📋"
+                                on:click={()=>copyToClipboard(generatedAssessment)}
+                                />
                         </p>
                     </form>
                 {/if}
@@ -150,7 +163,11 @@ in the space provided.
                         disabled={$assessmentOutcomeRefs.length < 1}
                         outline={generatedExercises.length > 0}
                         on:click={generate}>
-                        Generate
+                        {#if generatedExercises.length < 1}
+                            Generate
+                        {:else}
+                            Re-generate
+                        {/if}
                     </Button>
                 </p>
                 {#if generatedExercises.length > 0}
