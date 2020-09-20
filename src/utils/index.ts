@@ -15,23 +15,10 @@ export const sameRefs = (o0:OutcomeRef,o1:OutcomeRef) => {
 export const refsToAssessment = (refs:OutcomeRef[],banks:Bank[]) => {
     const assessmentPrefix = `
 \\documentclass[11pt]{exam}
-\\usepackage{amsfonts,amssymb,amsmath,amsthm}
-\\usepackage{enumerate}
-\\pagestyle{headandfoot}
-\\firstpageheader{\\assessmentTitle \\hspace{2em} \\assessmentVersion}{}{Name: \\underline{\\hspace{2.5in}}}
-\\runningheader{\\assessmentTitle}{}{Page \\thepage\\ of \\numpages}
-\\runningheadrule
-\\firstpagefooter{}{}{}
-\\runningfooter{}{}{}
-\\newenvironment{exerciseStatement}{\\question}{}
-\\newenvironment{exerciseAnswer}{\\begin{solution}}{\\end{solution}\\vfill}
 
-
-
-
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%                          Edit settings                         %
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%                        Edit settings                        %
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 \\newcommand{\\assessmentTitle}{
 CheckIt Assessment
@@ -46,10 +33,21 @@ in the space provided.
 }
 %\\printanswers % uncomment to show answers
 
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
-%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 
 
+
+\\usepackage{amsfonts,amssymb,amsmath,amsthm}
+\\usepackage{enumerate}
+\\pagestyle{headandfoot}
+\\firstpageheader{\\assessmentTitle \\hspace{2em} \\assessmentVersion}{}{Name: \\underline{\\hspace{2.5in}}}
+\\runningheader{\\assessmentTitle}{}{Page \\thepage\\ of \\numpages}
+\\runningheadrule
+\\firstpagefooter{}{}{}
+\\runningfooter{}{}{}
+\\newenvironment{exerciseStatement}{\\question}{}
+\\newenvironment{exerciseAnswer}{\\begin{solution}}{\\end{solution}\\vfill}
 
 \\begin{document}
 
