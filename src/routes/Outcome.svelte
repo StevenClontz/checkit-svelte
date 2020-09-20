@@ -52,18 +52,20 @@
 <svelte:window on:keydown={handleKeydown}/>
 
 <Bank {params}>
-    <div class="d-none d-sm-block">
-        <Pagination
-            label="Version:" 
-            keyboardControl
-            bind:page={page}
-            pages={outcome.exercises.length}/>
-    </div>
-    <div class="d-block d-sm-none">
-        <Pagination bind:page={page} pages={outcome.exercises.length}/>
-    </div>
     
     <Row>
+        <Col xs="auto">
+            <div class="d-none d-sm-block">
+                <Pagination
+                    label="Version:"
+                    keyboardControl
+                    bind:page={page}
+                    pages={outcome.exercises.length}/>
+            </div>
+            <div class="d-block d-sm-none">
+                <Pagination bind:page={page} pages={outcome.exercises.length}/>
+            </div>
+        </Col>
         <Col xs="auto">
             <Button color="info" outline={!hiddenAnswer} on:click={toggleAnswer}>
                 {#if hiddenAnswer}Show{:else}Hide{/if} Answer
