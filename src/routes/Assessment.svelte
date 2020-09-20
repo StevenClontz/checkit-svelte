@@ -76,11 +76,12 @@
             <Col>
                 <p>
                     Clicking "Generate" will choose a random exercise assessing
-                    each outcome and write a LaTeX file below.
+                    each outcome.
                 </p>
                 {#if generatedAssessment}
                     <form bind:this={latexForm}>
                         <p>
+                            <em>Source code:</em>
                             <textarea
                                 name="snip"
                                 class="form-control text-monospace"
