@@ -9,11 +9,12 @@
     import Exercise from '../components/Exercise.svelte';
     import Sorter from '../components/Sorter.svelte';
     import Nav from '../components/Nav.svelte';
-    import { assessmentOutcomeRefs } from '../stores/instructor';
+    import { assessmentOutcomeRefs, instructorEnabled } from '../stores/instructor';
     import { banks } from '../stores/banks';
     import { refToOutcome, sample } from '../utils';
     import type { OutcomeRef } from '../types';
 
+    $instructorEnabled = true
     const display = (ref:OutcomeRef) => {
         let o = refToOutcome(ref,$banks);
         return `${ref.bankSlug}/${ref.outcomeSlug} — ${o.title}`
