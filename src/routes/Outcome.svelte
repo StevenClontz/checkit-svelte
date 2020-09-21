@@ -24,6 +24,7 @@
     $: outcomeRef = {'bankSlug': bank.slug, 'outcomeSlug': outcome.slug}
     $: version = versionStringToInt(params.exerciseVersion);
     $: exercise = outcome.exercises[version]
+    $: pages = Math.min(20,outcome.exercises.length)
     let hiddenAnswer = true; 
     let page = versionStringToInt(params.exerciseVersion);
     let outcomeSlug = params.outcomeSlug;
@@ -60,10 +61,10 @@
                     label="Version:"
                     keyboardControl
                     bind:page={page}
-                    pages={outcome.exercises.length}/>
+                    {pages}/>
             </div>
             <div class="d-block d-sm-none">
-                <Pagination bind:page={page} pages={outcome.exercises.length}/>
+                <Pagination bind:page={page} {pages}/>
             </div>
         </Col>
         <Col xs="auto">
