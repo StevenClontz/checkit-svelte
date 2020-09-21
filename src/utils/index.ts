@@ -41,13 +41,14 @@ in the space provided.
 \\usepackage{amsfonts,amssymb,amsmath,amsthm}
 \\usepackage{enumerate}
 \\pagestyle{headandfoot}
-\\firstpageheader{\\assessmentTitle \\hspace{2em} \\assessmentVersion}{}{Name: \\underline{\\hspace{2.5in}}}
+\\firstpageheader{\\assessmentTitle \\hspace{2em} \\assessmentVersion}{}{Name: \\underline{\\hspace{2.5in}}\\\\ID: \\underline{\\hspace{2.5in}}}
 \\runningheader{\\assessmentTitle}{}{Page \\thepage\\ of \\numpages}
 \\runningheadrule
 \\firstpagefooter{}{}{}
 \\runningfooter{}{}{}
-\\newenvironment{exerciseStatement}{\\question}{}
-\\newenvironment{exerciseAnswer}{\\begin{solution}}{\\end{solution}\\vfill}
+\\newenvironment{exercise}[3]{\\question}{\\vfill}
+\\newenvironment{exerciseStatement}{}{}
+\\newenvironment{exerciseAnswer}{\\begin{solution}}{\\end{solution}}
 
 \\begin{document}
 
