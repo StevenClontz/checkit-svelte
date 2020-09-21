@@ -8,17 +8,10 @@
 
     let loading = true;
     onMount(async () => {
-        const res = await fetch(`./bank.json`);
-        let _0 = await res.json();
-        let _1 = {..._0};
-        let _2 = {..._0};
-        _1.title = "Foobar";
-        _1.slug = "foo";
-        _1.outcomes = _1.outcomes.slice(2,7);
-        _2.title = "Hello Baz";
-        _2.slug = "baz";
-        _2.outcomes = _2.outcomes.slice(3,8);
-        banks.set([_0,_1,_2])
+        const res = await fetch(`./banks/clontz-diff-eq.json`);
+        banks.set([
+            await res.json(),
+        ])
         loading = false;
     });
 </script>
