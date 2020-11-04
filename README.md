@@ -1,4 +1,11 @@
-*Looking for a shareable component template? Go here --> [sveltejs/component-template](https://github.com/sveltejs/component-template)*
+# checkit-svelte
+
+A single-page application rewrite of <https://checkit.clontz.org> using Svelte/Typescript, going public in 2021 January.
+(The old site's repo is <https://github.com/stevenclontz/checkit.clontz.org>, a staticly generated site using Ruby/nanoc.)
+Preview it at <https://github.io/stevenclontz/checkit-svelte>.
+
+This SPA ingests JSON-blob "banks" genereated by <https://github.com/stevenclontz/checkit/> for use by the public in
+practicing the randomized exercises authored in the CheckIt environment.
 
 ---
 
