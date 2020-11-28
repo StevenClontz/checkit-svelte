@@ -8,9 +8,11 @@
 
     let loading = true;
     onMount(async () => {
-        const res = await fetch(`./banks/clontz-diff-eq.json`);
+        const diffeq = await fetch(`./banks/clontz-diff-eq.json`);
+        const la = await fetch(`./banks/tbil-la.json`);
         banks.set([
-            await res.json(),
+            await diffeq.json(),
+            await la.json(),
         ])
         loading = false;
     });

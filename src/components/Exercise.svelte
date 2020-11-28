@@ -14,13 +14,13 @@
     const parseMath = (html:string) => {
         return html.replace(
             inlineMathRe,
-            (_, tex:string) => katex.renderToString(tex, {
+            (_, tex:string) => katex.renderToString(tex.replace(/&amp;/g,'&'), {
                 'displayMode': false,
                 'throwOnError': false,
             })
         ).replace(
             displayMathRe,
-            (_, tex:string) => katex.renderToString(tex, {
+            (_, tex:string) => katex.renderToString(tex.replace(/&amp;/g,'&'), {
                 'displayMode': true,
                 'throwOnError': false,
             })
