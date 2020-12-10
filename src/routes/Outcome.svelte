@@ -54,6 +54,8 @@
 
 <Bank {params}>
     
+    <p>{outcome.description} <br/><small>{outcome.alignment}</small></p>
+    
     <Row>
         <Col xs="auto">
             <div class="d-none d-sm-block">

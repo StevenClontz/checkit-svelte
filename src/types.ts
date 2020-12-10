@@ -6,6 +6,8 @@ export type Bank = {
 export type Outcome = {
     title: string;
     slug: string;
+    description: string;
+    alignment: string;
     exercises: Array<Exercise>;
 }
 export type Exercise = {
