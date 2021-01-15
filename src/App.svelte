@@ -11,7 +11,9 @@
         const diffeq = await fetch(
             `https://stevenclontz.github.io/checkit-clontz-diff-eq/builds/public/clontz-diff-eq-bank.json`
         );
-        const la = await fetch(`./banks/tbil-la.json`);
+        const la = await fetch(
+            `https://teambasedinquirylearning.github.io/checkit-tbil-la/builds/public/tbil-la-bank.json`
+        );
         banks.set([
             await diffeq.json(),
             await la.json(),
