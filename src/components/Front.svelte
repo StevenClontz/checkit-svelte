@@ -19,8 +19,12 @@
 		<h4>Source on GitHub</h4>
 		
 		<ul>
-		  <li><a href="https://github.com/stevenclontz/checkit">CheckIt Authoring Platform</a></li>
-		  <li><a href="https://github.com/stevenclontz/checkit-svelte">CheckIt Web Viewer</a></li>
+		  	<li>
+				<a href="https://github.com/stevenclontz/checkit-svelte">CheckIt Viewer</a>
+			</li>
+		  	<li>
+				<a href="https://github.com/stevenclontz/checkit">CheckIt Dashboard</a>
+			</li>
 		</ul>
 	</Container>
 </main>
