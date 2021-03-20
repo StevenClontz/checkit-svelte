@@ -11,6 +11,9 @@
         Label,
         Collapse,
         NavbarToggler,
+        Modal,
+        ModalBody,
+        ModalHeader
     } from 'sveltestrap';
     import {location} from 'svelte-spa-router';
     import type { Bank } from '../types';
@@ -19,8 +22,10 @@
     export let bank: Bank | undefined = undefined;
 
     let isOpen = false;
-
     const handleUpdate = (event) => isOpen = event.detail.isOpen
+    
+    let codeCellOpen = false;
+    const codeCellToggle = () => (codeCellOpen = !codeCellOpen);
 </script>
 
 <Navbar color="primary" dark expand="md">
@@ -29,6 +34,11 @@
     <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
         <Nav navbar>
             <BankDropdown {bank} inNav/>
+            <NavItem>
+                <NavLink on:click={codeCellToggle}>
+                    Code Cell
+                </NavLink>
+            </NavItem>
             {#if $instructorEnabled}
                 <NavItem>
                     <NavLink href="#/assessment" active={$location=="/assessment"}>
@@ -38,14 +48,22 @@
             {/if}
         </Nav>
         <Nav navbar class="ml-auto">
-            <form class="form-inline">
-                <FormGroup check>
-                <Label check class="navbar-text">
-                    <Input readonly={false} type="checkbox" bind:checked={$instructorEnabled} />
-                    Show instructor options
-                </Label>
-                </FormGroup>
-            </form>
+            <NavItem>
+                <form class="form-inline">
+                    <FormGroup check>
+                    <Label check class="navbar-text">
+                        <Input size="" readonly={false} type="checkbox" bind:checked={$instructorEnabled} />
+                        Show instructor options
+                    </Label>
+                    </FormGroup>
+                </form>
+            </NavItem>
         </Nav>
     </Collapse>
 </Navbar>
+<Modal isOpen={codeCellOpen} size="lg" toggle={codeCellToggle} transitionOptions="">
+  <ModalHeader toggle={codeCellToggle}>Code Cell</ModalHeader>
+  <ModalBody>
+    <iframe title="codecell" width="100%" height="400px" src="codecell/"/>
+  </ModalBody>
+</Modal>
