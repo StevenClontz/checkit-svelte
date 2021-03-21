@@ -11,9 +11,6 @@
         Label,
         Collapse,
         NavbarToggler,
-        Modal,
-        ModalBody,
-        ModalHeader
     } from 'sveltestrap';
     import {location} from 'svelte-spa-router';
     import type { Bank } from '../types';
@@ -61,9 +58,6 @@
         </Nav>
     </Collapse>
 </Navbar>
-<Modal isOpen={codeCellOpen} size="lg" toggle={codeCellToggle} transitionOptions="">
-  <ModalHeader toggle={codeCellToggle}>Code Cell</ModalHeader>
-  <ModalBody>
-    <iframe title="codecell" width="100%" height="400px" src="codecell/"/>
-  </ModalBody>
-</Modal>
+<div style="display: {codeCellOpen ? 'block' : 'none'}">
+    <iframe title="codecell" style="width:100%;height:400px;" src="codecell/"/>
+</div>
