@@ -15,14 +15,14 @@
     import {location} from 'svelte-spa-router';
     import type { Bank } from '../types';
     import { instructorEnabled } from '../stores/instructor';
+    import CodeCell from './CodeCell.svelte';
     
     export let bank: Bank | undefined = undefined;
 
     let isOpen = false;
     const handleUpdate = (event) => isOpen = event.detail.isOpen
     
-    let codeCellOpen = false;
-    const codeCellToggle = () => (codeCellOpen = !codeCellOpen);
+    import {toggleCodeCell} from '../utils';
 </script>
 
 <Navbar color="primary" dark expand="md">
@@ -32,7 +32,7 @@
         <Nav navbar>
             <BankDropdown {bank} inNav/>
             <NavItem>
-                <NavLink on:click={codeCellToggle}>
+                <NavLink on:click={toggleCodeCell}>
                     Code Cell
                 </NavLink>
             </NavItem>
@@ -58,6 +58,4 @@
         </Nav>
     </Collapse>
 </Navbar>
-<div style="display: {codeCellOpen ? 'block' : 'none'}">
-    <iframe title="codecell" style="width:100%;height:400px;" src="codecell/"/>
-</div>
+<CodeCell/>

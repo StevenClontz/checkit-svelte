@@ -1,5 +1,9 @@
 import type {Bank, OutcomeRef, Assessment} from '../types';
 
+import {isOpen as codeCellIsOpen} from '../stores/codecell';
+
+export const toggleCodeCell = () => {codeCellIsOpen.update(x=>!x)}
+
 export const refToBank = (ref:OutcomeRef,banks:Bank[]) => 
     banks.find((b)=>b.slug===ref.bankSlug)
 

@@ -7,7 +7,7 @@
     import { instructorEnabled, assessmentOutcomeRefs } from '../stores/instructor';
     import Bank from './Bank.svelte';
     import { push } from 'svelte-spa-router';
-    import { sameRefs } from '../utils';
+    import { toggleCodeCell, sameRefs } from '../utils';
 
     export let params:Params;
 
@@ -70,8 +70,12 @@
             </div>
         </Col>
         <Col xs="auto">
-            <Button color="info" outline={!hiddenAnswer} on:click={toggleAnswer}>
-                {#if hiddenAnswer}Show{:else}Hide{/if} Answer
+            Show/Hide:
+            <Button color="info" outline on:click={toggleAnswer}>
+                Answer
+            </Button>
+            <Button color="secondary" outline on:click={toggleCodeCell}>
+                Code Cell
             </Button>
         </Col>
         {#if $instructorEnabled }
