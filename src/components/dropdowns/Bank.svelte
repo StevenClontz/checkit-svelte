@@ -17,7 +17,11 @@
         {#if bank}
             {bank.title}
         {:else}
-            Select an exercise bank:
+            {#if inNav}
+                Exercise Banks
+            {:else}
+                Select an exercise bank:
+            {/if}
         {/if}
     </DropdownToggle>
     <DropdownMenu>

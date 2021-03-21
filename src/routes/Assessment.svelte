@@ -39,8 +39,6 @@
     }
 </script>
 
-<Nav/>
-
 <main>
     <Container>
         <h1 class="display-4">☑️It Assessment Builder</h1>

@@ -17,8 +17,6 @@
     }
 </script>
 
-<Nav {bank}/>
-
 <main>
     <Container>
         <h1>{bank.title}</h1>

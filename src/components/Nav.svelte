@@ -15,7 +15,6 @@
     import {location} from 'svelte-spa-router';
     import type { Bank } from '../types';
     import { instructorEnabled } from '../stores/instructor';
-    import CodeCell from './CodeCell.svelte';
     
     export let bank: Bank | undefined = undefined;
 
@@ -58,4 +57,3 @@
         </Nav>
     </Collapse>
 </Navbar>
-<CodeCell/>

@@ -5,6 +5,7 @@
     import Router from 'svelte-spa-router';
     import { routes } from './routes';
     import { Spinner } from 'sveltestrap';
+    import CodeCell from './components/CodeCell.svelte';
 
     let loading = true;
     onMount(async () => {
@@ -27,8 +28,9 @@
 </script>
 
 
+<Nav/>
+<CodeCell/>
 {#if loading}
-    <Nav/>
     <div class="text-center">
         <h1 class="display-4">Loading ☑️It...</h1>
         <Spinner color="primary" />
