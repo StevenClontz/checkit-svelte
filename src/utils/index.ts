@@ -51,6 +51,7 @@ in the space provided.
 \\runningheadrule
 \\firstpagefooter{}{}{}
 \\runningfooter{}{}{}
+\\renewcommand{\\solutiontitle}{\\noindent\\textbf{Answer:}}
 \\newenvironment{exercise}[3]{\\question}{\\vfill}
 \\newenvironment{exerciseStatement}{}{}
 \\newenvironment{exerciseAnswer}{\\begin{solution}}{\\end{solution}}
