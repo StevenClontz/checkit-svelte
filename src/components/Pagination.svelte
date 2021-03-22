@@ -7,6 +7,7 @@
     export let pages: number;
     export let label: string | undefined = undefined;
     export let keyboardControl: boolean = false;
+    export let minimal: boolean = false;
 
     const pageRange = (p:number) => {
         let start = Math.max(0,Math.min(p-2,pages-5))
@@ -38,9 +39,11 @@
             <PaginationLink>{label}</PaginationLink>
         </PaginationItem>
         {/if}
+        {#if !minimal}
         <PaginationItem disabled={page==0}>
             <PaginationLink first on:click={setPage(0)} />
         </PaginationItem>
+        {/if}
         <PaginationItem disabled={page==0}>
             <PaginationLink previous on:click={setPage(page-1)} />
         </PaginationItem>
@@ -52,9 +55,11 @@
         <PaginationItem disabled={page==pages-1}>
             <PaginationLink next on:click={setPage(page+1)} />
         </PaginationItem>
+        {#if !minimal}
         <PaginationItem disabled={page==pages-1}>
             <PaginationLink last on:click={setPage(pages-1)} />
         </PaginationItem>
+        {/if}
     </Pagination>
 </div>
 

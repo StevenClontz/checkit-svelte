@@ -58,47 +58,51 @@
     
     <Row>
         <Col xs="auto">
-            <div class="d-none d-sm-block">
+            <p class="d-none d-sm-block">
                 <Pagination
                     label="Version:"
                     keyboardControl
                     bind:page={page}
                     {pages}/>
-            </div>
-            <div class="d-block d-sm-none">
-                <Pagination bind:page={page} {pages}/>
-            </div>
+            </p>
+            <p class="d-block d-sm-none">
+                <Pagination minimal bind:page={page} {pages}/>
+            </p>
         </Col>
         <Col xs="auto">
-            Show/Hide:
-            <Button color="info" outline on:click={toggleAnswer}>
-                Answer
-            </Button>
-            <Button color="secondary" outline on:click={toggleCodeCell}>
-                Code Cell
-            </Button>
+            <p>
+                Show/Hide:
+                <Button color="info" outline on:click={toggleAnswer}>
+                    Answer
+                </Button>
+                <Button color="secondary" outline on:click={toggleCodeCell}>
+                    Code Cell
+                </Button>
+            </p>
         </Col>
         {#if $instructorEnabled }
             <Col xs="auto">
-                <span># Included in Assessment:</span>
-                <div class="btn-group ml-2" role="group">
-                    <Button
-                        color="success" 
-                        disabled={countInAssessment<1} 
-                        on:click={removeFromAssessment}>
-                        -
-                    </Button>
-                    <Button
-                        color="success"
-                        outline>
-                        {countInAssessment}
-                    </Button>
-                    <Button
-                        color="success" 
-                        on:click={addToAssessment}>
-                        +
-                    </Button>
-                </div>
+                <p>
+                    <span># Included in Assessment:</span>
+                    <span class="btn-group ml-2" role="group">
+                        <Button
+                            color="success" 
+                            disabled={countInAssessment<1} 
+                            on:click={removeFromAssessment}>
+                            -
+                        </Button>
+                        <Button
+                            color="success"
+                            outline>
+                            {countInAssessment}
+                        </Button>
+                        <Button
+                            color="success" 
+                            on:click={addToAssessment}>
+                            +
+                        </Button>
+                    </span>
+                </p>
             </Col>
         {/if}
     </Row>
