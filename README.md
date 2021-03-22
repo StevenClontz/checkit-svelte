@@ -12,7 +12,8 @@ page at <https://checkit.clontz.org/codecell/#python>. By changing the hash valu
 (e.g. <https://checkit.clontz.org/codecell/#r>) you can specify the default language selected when loading the
 page, but users can always choose their language of choice.
 
-The main application is to allow developers to simply embed a code cell by using an Iframe
+The main application is to allow instructors or developers to simply embed a code cell in
+a web page by using an Iframe
 (in particular, this can be used in situations where arbitrary Javascript is unallowed, e.g. LMSes):
 
 ```
