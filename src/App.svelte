@@ -2,6 +2,7 @@
     import Nav from './components/Nav.svelte';
     import { onMount } from 'svelte';
     import { banks } from './stores/banks';
+    import { embedMode } from './stores/embed';
     import Router from 'svelte-spa-router';
     import { routes } from './routes';
     import { Spinner } from 'sveltestrap';
@@ -9,6 +10,9 @@
 
     let loading = true;
     onMount(async () => {
+        if (window['embedMode']) {
+            $embedMode = true;
+        }
         const diffeq = await fetch(
             `https://stevenclontz.github.io/checkit-clontz-diff-eq/builds/public/clontz-diff-eq-bank.json`
         );
@@ -21,11 +25,13 @@
         ])
         loading = false;
     });
+
 </script>
 
-
+{#if !$embedMode}
 <Nav/>
 <CodeCell/>
+{/if}
 {#if loading}
     <div class="text-center">
         <h1 class="display-4">Loading ☑️It...</h1>

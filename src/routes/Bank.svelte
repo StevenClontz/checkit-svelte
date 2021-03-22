@@ -4,9 +4,9 @@
         Container,
         Alert,
     } from 'sveltestrap';
-    import Nav from '../components/Nav.svelte';
     import OutcomeDropdown from '../components/dropdowns/Outcome.svelte';
     import { banks } from '../stores/banks';
+    import { embedMode } from '../stores/embed';
     import type { Outcome } from '../types';
 
     export let params:Params;
@@ -18,6 +18,9 @@
 </script>
 
 <main>
+    {#if $embedMode}
+        <slot/>
+    {:else}
     <Container>
         <h1>{bank.title}</h1>
         {#if bank.outcomes}
@@ -29,6 +32,7 @@
         {/if}
         <slot/>
     </Container>
+    {/if}
 </main>
 
 <style>

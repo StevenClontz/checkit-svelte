@@ -3,6 +3,7 @@
     import { afterUpdate } from 'svelte';
     import type { Exercise } from '../types';
     import { instructorEnabled } from '../stores/instructor';
+    import { embedMode } from '../stores/embed';
     import { Nav, NavItem, NavLink, Row, Col } from 'sveltestrap';
 
     export let exercise: Exercise;
@@ -52,7 +53,7 @@
     }
 </script>
 
-{#if !statementOnly}
+{#if !statementOnly && !$embedMode}
     {#if $instructorEnabled}
         <div class="navtabs">
             <Nav tabs>
@@ -73,6 +74,9 @@
     {/if}
 {/if}
 
+{#if $embedMode }
+    <div bind:this={exerciseDiv}>{@html parseMath(exercise.html)}</div>
+{:else}
 <Row>
     <Col sm={{ size: 10, offset: 1 }}>
         {#if mode == "display"}
@@ -88,6 +92,7 @@
         {/if}
     </Col>
 </Row>
+{/if}
 
 <style>
     pre {

@@ -4,6 +4,7 @@
     import type { Params } from '../types';
     import { Button, Row, Col } from 'sveltestrap';
     import { banks } from '../stores/banks';
+    import { embedMode } from '../stores/embed';
     import { instructorEnabled, assessmentOutcomeRefs } from '../stores/instructor';
     import Bank from './Bank.svelte';
     import { push } from 'svelte-spa-router';
@@ -54,7 +55,11 @@
 
 <Bank {params}>
     
-    <p>{outcome.description} <br/><small>{outcome.alignment}</small></p>
+    <p>
+        {#if $embedMode}<span class="h5">{bank.title} {outcomeSlug}.</span>{/if}
+        {outcome.description} <br/>
+        <small>{outcome.alignment}</small>
+    </p>
     
     <Row>
         <Col xs="auto">
@@ -75,12 +80,14 @@
                 <Button color="info" outline on:click={toggleAnswer}>
                     Answer
                 </Button>
+                {#if !embedMode}
                 <Button color="secondary" outline on:click={toggleCodeCell}>
                     Code Cell
                 </Button>
+                {/if}
             </p>
         </Col>
-        {#if $instructorEnabled }
+        {#if $instructorEnabled && !$embedMode }
             <Col xs="auto">
                 <p>
                     <span># Included in Assessment:</span>
@@ -107,7 +114,7 @@
         {/if}
     </Row>
     
-    <div class="mt-2">
+    <div class='mt-2'>
         <Exercise {hiddenAnswer} {exercise}/>
     </div>
 </Bank>
