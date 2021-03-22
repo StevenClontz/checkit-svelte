@@ -86,11 +86,9 @@
                 <Button color="info" outline on:click={toggleAnswer}>
                     Answer
                 </Button>
-                {#if !embedMode}
                 <Button color="secondary" outline on:click={toggleCodeCell}>
                     Code Cell
                 </Button>
-                {/if}
             </p>
         </Col>
         {#if $instructorEnabled }
