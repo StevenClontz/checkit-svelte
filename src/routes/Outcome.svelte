@@ -61,6 +61,12 @@
         <small>{outcome.alignment}</small>
     </p>
     
+    {#if $embedMode }
+        <Pagination label="Version:" bind:page={page} {pages}/>
+        <Button color="info" outline on:click={toggleAnswer}>
+            Show/Hide Answer
+        </Button>
+    {:else}
     <Row>
         <Col xs="auto">
             <p class="d-none d-sm-block">
@@ -87,7 +93,7 @@
                 {/if}
             </p>
         </Col>
-        {#if $instructorEnabled && !$embedMode }
+        {#if $instructorEnabled }
             <Col xs="auto">
                 <p>
                     <span># Included in Assessment:</span>
@@ -113,6 +119,7 @@
             </Col>
         {/if}
     </Row>
+    {/if}
     
     <div class='mt-2'>
         <Exercise {hiddenAnswer} {exercise}/>

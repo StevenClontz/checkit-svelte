@@ -40,7 +40,9 @@
 {:else}
     <Router {routes}/>
 {/if}
-
+{#if $embedMode}
+<p class="text-center"><small><em>Powered by <a href="https://checkit.clontz.org">CheckIt.clontz.org</a>.</em></small></p>
+{/if}
 
 <style>
     h1 { margin-top: 1em; }
