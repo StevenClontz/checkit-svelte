@@ -15,13 +15,9 @@
         const la = await fetch(
             `https://teambasedinquirylearning.github.io/checkit-tbil-la/builds/public/tbil-la-bank.json`
         );
-        const aa = await fetch(
-            `https://stevenclontz.github.io/checkit-clontz-abs-alg/builds/public/clontz-abs-alg-bank.json`
-        );
         banks.set([
             await diffeq.json(),
             await la.json(),
-            await aa.json(),
         ])
         loading = false;
     });
