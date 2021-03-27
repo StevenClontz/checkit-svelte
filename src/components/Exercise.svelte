@@ -1,11 +1,15 @@
 <script lang="ts">
     import katex from 'katex';
     import { afterUpdate } from 'svelte';
-    import type { Exercise } from '../types';
+    import type { Exercise, Bank, Outcome } from '../types';
     import { instructorEnabled } from '../stores/instructor';
     import { embedMode } from '../stores/embed';
     import { Nav, NavItem, NavLink, Row, Col } from 'sveltestrap';
 
+    export let bank: Bank = 
+        {title: 'unknown', slug: 'unknown', outcomes: []};
+    export let outcome: Outcome = 
+        {title: 'unknown', slug: 'unknown', exercises: [], description: 'unknown', alignment: 'unknown'};
     export let exercise: Exercise;
     export let hiddenAnswer: boolean=true;
     export let statementOnly: boolean=false;
@@ -44,8 +48,8 @@
     }
     afterUpdate(decorateAnswer);
 
-    const modes = ['display', 'html', 'tex', 'pretext']
-    const modeLabels = ['Display', 'HTML source', 'LaTeX source', 'PreTeXt source']
+    const modes = ['display', 'html', 'tex', 'pretext', 'embed']
+    const modeLabels = ['Display', 'HTML source', 'LaTeX source', 'PreTeXt source', 'HTML Embed']
     let mode = "display";
     const changeMode = (m:string) => (e:Event) => {
         e.preventDefault();
@@ -87,6 +91,11 @@
             <pre class="pre-scrollable"><code>{exercise.tex}</code></pre>
         {:else if mode == "pretext"}
             <pre class="pre-scrollable"><code>{exercise.pretext}</code></pre>
+        {:else if mode == "embed"}
+            <pre class="pre-scrollable"><code>&lt;iframe title="Iframe CheckIt Outcome"
+    width="800"
+    height="450"
+    src="https://checkit.clontz.org/embed/#/banks/{bank.slug}/{outcome.slug}"&gt;</code></pre>
         {:else}
             Invalid mode.
         {/if}

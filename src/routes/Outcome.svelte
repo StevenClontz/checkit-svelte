@@ -120,6 +120,6 @@
     {/if}
     
     <div class='mt-2'>
-        <Exercise {hiddenAnswer} {exercise}/>
+        <Exercise {hiddenAnswer} {exercise} {outcome} {bank}/>
     </div>
 </Bank>
