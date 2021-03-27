@@ -11,6 +11,7 @@
     export let outcome: Outcome = 
         {title: 'unknown', slug: 'unknown', exercises: [], description: 'unknown', alignment: 'unknown'};
     export let exercise: Exercise;
+    export let page = 1;
     export let hiddenAnswer: boolean=true;
     export let statementOnly: boolean=false;
 
@@ -48,8 +49,8 @@
     }
     afterUpdate(decorateAnswer);
 
-    const modes = ['display', 'html', 'tex', 'pretext', 'embed']
-    const modeLabels = ['Display', 'HTML source', 'LaTeX source', 'PreTeXt source', 'HTML Embed']
+    const modes = ['display', 'html', 'embed', 'tex', 'pretext']
+    const modeLabels = ['Display', 'HTML', 'Embed (HTML)', 'LaTeX', 'PreTeXt']
     let mode = "display";
     const changeMode = (m:string) => (e:Event) => {
         e.preventDefault();
@@ -95,7 +96,7 @@
             <pre class="pre-scrollable"><code>&lt;iframe title="Iframe CheckIt Outcome"
     width="800"
     height="450"
-    src="https://checkit.clontz.org/embed/#/banks/{bank.slug}/{outcome.slug}"&gt;</code></pre>
+    src="https://checkit.clontz.org/embed/#/banks/{bank.slug}/{outcome.slug}/{page+1}/"&gt;</code></pre>
         {:else}
             Invalid mode.
         {/if}
