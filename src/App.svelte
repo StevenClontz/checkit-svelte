@@ -30,8 +30,8 @@
 
 {#if !$embedMode}
 <Nav/>
-<CodeCell/>
 {/if}
+<CodeCell/>
 {#if loading}
     <div class="text-center">
         <h1 class="display-4">Loading ☑️It...</h1>

@@ -17,7 +17,7 @@
         <h4>
             Code Cell:
         </h4>
-        <iframe title="codecell" style="width:100%;height:50vh;" src="codecell/"/>
+        <iframe title="codecell" style="width:100%;height:50vh;" src="/codecell/"/>
     </Alert>
 </div>
 {/if}

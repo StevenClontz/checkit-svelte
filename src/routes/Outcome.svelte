@@ -62,10 +62,25 @@
     </p>
     
     {#if $embedMode }
-        <Pagination label="Version:" bind:page={page} {pages}/>
-        <Button color="info" outline on:click={toggleAnswer}>
-            Show/Hide Answer
-        </Button>
+        <p class="d-none d-sm-block">
+            <Pagination
+                label="Version:"
+                keyboardControl
+                bind:page={page}
+                {pages}/>
+        </p>
+        <p class="d-block d-sm-none">
+            <Pagination minimal bind:page={page} {pages}/>
+        </p>
+        <p>
+            Show/Hide:
+            <Button color="info" outline on:click={toggleAnswer}>
+                Answer
+            </Button>
+            <Button color="secondary" outline on:click={toggleCodeCell}>
+                Code Cell
+            </Button>
+        </p>
     {:else}
     <Row>
         <Col xs="auto">
