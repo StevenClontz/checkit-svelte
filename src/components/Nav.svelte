@@ -35,25 +35,30 @@
                     Code Cell
                 </NavLink>
             </NavItem>
+        </Nav>
+        <Nav navbar class="ml-auto">
+            <NavItem class="mr-1">
+                <form class="form-inline">
+                    <FormGroup check>
+                    <Label check class="navbar-text">
+                        <Input size="" readonly={false} type="checkbox" bind:checked={$instructorEnabled} />
+                        Show instructor features
+                    </Label>
+                    </FormGroup>
+                </form>
+            </NavItem>
             {#if $instructorEnabled}
                 <NavItem>
                     <NavLink href="#/assessment" active={$location=="/assessment"}>
                         Assessment Builder
                     </NavLink>
                 </NavItem>
+                <NavItem>
+                    <NavLink href="https://github.com/StevenClontz/checkit-platform/#dashboard">
+                        Dashboard
+                    </NavLink>
+                </NavItem>
             {/if}
-        </Nav>
-        <Nav navbar class="ml-auto">
-            <NavItem>
-                <form class="form-inline">
-                    <FormGroup check>
-                    <Label check class="navbar-text">
-                        <Input size="" readonly={false} type="checkbox" bind:checked={$instructorEnabled} />
-                        Show instructor options
-                    </Label>
-                    </FormGroup>
-                </form>
-            </NavItem>
         </Nav>
     </Collapse>
 </Navbar>
