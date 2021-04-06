@@ -96,7 +96,8 @@
             <pre class="pre-scrollable"><code>&lt;iframe title="Iframe CheckIt Outcome"
     width="800"
     height="450"
-    src="https://checkit.clontz.org/embed/#/banks/{bank.slug}/{outcome.slug}/{page+1}/"&gt;</code></pre>
+    src="https://checkit.clontz.org/embed/#/banks/{bank.slug}/{outcome.slug}/{page+1}/"&gt;
+&lt;/iframe&gt;</code></pre>
         {:else}
             Invalid mode.
         {/if}
