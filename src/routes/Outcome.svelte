@@ -131,6 +131,6 @@
     {/if}
     
     <div class='mt-2'>
-        <Exercise {hiddenAnswer} {exercise} {outcome} bank={$bank} {page} embedded={$querystring=="embed"}/>
+        <Exercise {hiddenAnswer} {exercise} {outcome} {page} embedded={$querystring=="embed"}/>
     </div>
 </Bank>

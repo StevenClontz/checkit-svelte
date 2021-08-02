@@ -1,18 +1,16 @@
 <script lang="ts">
     import katex from 'katex';
     import { afterUpdate } from 'svelte';
-    import type { Exercise, Bank, Outcome } from '../types';
+    import type { Exercise, Outcome } from '../types';
     import { instructorEnabled } from '../stores/instructor';
     import { Nav, NavItem, NavLink, Row, Col } from 'sveltestrap';
 
     export let embedded:Boolean = false;
 
-    export let bank: Bank = 
-        {title: 'unknown', slug: 'unknown', outcomes: []};
     export let outcome: Outcome = 
         {title: 'unknown', slug: 'unknown', exercises: [], description: 'unknown', alignment: 'unknown'};
     export let exercise: Exercise;
-    export let page = 1;
+    export let page = 0;
     export let hiddenAnswer: boolean=true;
     export let statementOnly: boolean=false;
 
@@ -97,7 +95,7 @@
             <pre class="pre-scrollable"><code>&lt;iframe title="Iframe CheckIt Outcome"
     width="800"
     height="450"
-    src="https://checkit.clontz.org/embed/#/banks/{bank.slug}/{outcome.slug}/{page+1}/"&gt;
+    src="{location.protocol}//{location.host}{location.pathname}#/bank/{outcome.slug}/{page+1}/?embed"&gt;
 &lt;/iframe&gt;</code></pre>
         {:else}
             Invalid mode.
