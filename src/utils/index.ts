@@ -38,6 +38,8 @@ in the space provided.
 \\usepackage{amsfonts,amssymb,amsmath,amsthm}
 \\setcounter{MaxMatrixCols}{50}
 \\usepackage{enumerate}
+\\usepackage{graphicx}
+\\usepackage{caption}
 \\pagestyle{headandfoot}
 \\firstpageheader{\\assessmentTitle \\hspace{2em} \\assessmentVersion}{}{Name: \\underline{\\hspace{2.5in}}\\\\ID: \\underline{\\hspace{2.5in}}}
 \\runningheader{\\assessmentTitle}{}{Page \\thepage\\ of \\numpages}
