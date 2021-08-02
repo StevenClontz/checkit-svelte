@@ -9,22 +9,21 @@
         DropdownMenu,
         DropdownItem,
     } from 'sveltestrap';
-    import BankDropdown from '../components/dropdowns/Bank.svelte';
+    import OutcomeDropdown from '../components/dropdowns/Outcome.svelte';
     import Exercise from '../components/Exercise.svelte';
     import Sorter from '../components/Sorter.svelte';
-    import Nav from '../components/Nav.svelte';
-    import { assessmentOutcomeRefs, instructorEnabled } from '../stores/instructor';
-    import { banks } from '../stores/banks';
-    import { refToOutcome, refsToAssessment } from '../utils';
-    import type { OutcomeRef, Assessment } from '../types';
+    import { assessmentOutcomeSlugs, instructorEnabled } from '../stores/instructor';
+    import { bank } from '../stores/banks';
+    import { getOutcomeFromSlug, getRandomAssessmentFromSlugs } from '../utils';
+    import type { Assessment } from '../types';
 
     $instructorEnabled = true
-    const display = (ref:OutcomeRef) => {
-        let o = refToOutcome(ref,$banks);
-        return `${ref.bankSlug}/${ref.outcomeSlug} — ${o.title}`
+    const display = (slug:string) => {
+        let o = getOutcomeFromSlug($bank,slug);
+        return `${slug} — ${o.title}`
     };
     let generatedAssessment: Assessment | undefined = undefined
-    const generate = () => generatedAssessment = refsToAssessment($assessmentOutcomeRefs,$banks)
+    const generate = () => generatedAssessment = getRandomAssessmentFromSlugs($bank,$assessmentOutcomeSlugs)
 
     const copyToClipboard = (text:string) => () => {
         navigator.clipboard.writeText(text)
@@ -45,10 +44,9 @@
         <Row>
             <Col sm="4">
                 <p>
-                    Build your assessment by first adding learning outcomes 
-                    from exercise banks:
+                    Build your assessment by first adding learning outcomes:
                 </p>
-                <p><BankDropdown/></p>
+                <p><OutcomeDropdown/></p>
                 <p>
                     Then you can sort these outcomes into whatever order 
                     you wish. 
@@ -56,14 +54,14 @@
             </Col>
             <Col sm="8">
                 <div class="outcome-ordering">
-                    {#if $assessmentOutcomeRefs.length < 1}
+                    {#if $assessmentOutcomeSlugs.length < 1}
                         (Add outcomes for your assessment.)
                     {/if}
-                    <Sorter bind:array={$assessmentOutcomeRefs} {display} removesItems/>
-                    {#if $assessmentOutcomeRefs.length > 0}
+                    <Sorter bind:array={$assessmentOutcomeSlugs} {display} removesItems/>
+                    {#if $assessmentOutcomeSlugs.length > 0}
                         <a 
                             href="#."
-                            on:click|preventDefault={()=>$assessmentOutcomeRefs=[]}>
+                            on:click|preventDefault={()=>$assessmentOutcomeSlugs=[]}>
                             [Reset outcomes]
                         </a>
                     {/if}
@@ -94,7 +92,7 @@
                     <Col xs="auto" class="ml-auto">
                         <Button
                             color="primary"
-                            disabled={$assessmentOutcomeRefs.length < 1}
+                            disabled={$assessmentOutcomeSlugs.length < 1}
                             outline={generatedAssessment !== undefined}
                             on:click={generate}>
                             {#if generatedAssessment}

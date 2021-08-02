@@ -1,6 +1,7 @@
 export type Bank = {
     title: string;
     slug: string;
+    url: string;
     outcomes: Array<Outcome>;
 }
 export type Outcome = {
@@ -20,10 +21,6 @@ export type Exercise = {
 export type Params = {
     outcomeSlug: string;
     exerciseVersion: string;
-}
-export type OutcomeRef = {
-    bankSlug: string;
-    outcomeSlug: string;
 }
 export type Assessment = {
     exercises: Exercise[]

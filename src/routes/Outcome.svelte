@@ -4,10 +4,10 @@
     import type { Params } from '../types';
     import { Button, Row, Col } from 'sveltestrap';
     import { bank } from '../stores/banks';
-    import { instructorEnabled, assessmentOutcomeRefs } from '../stores/instructor';
+    import { instructorEnabled, assessmentOutcomeSlugs } from '../stores/instructor';
     import Bank from './Bank.svelte';
     import { push, querystring } from 'svelte-spa-router';
-    import { toggleCodeCell, sameRefs } from '../utils';
+    import { toggleCodeCell } from '../utils';
 
     export let params:Params;
 
@@ -20,7 +20,6 @@
     const versionStringToInt = (vs:string) => parseInt(vs)-1
 
     $: outcome = $bank.outcomes.find((o)=>o.slug==params.outcomeSlug);
-    $: outcomeRef = {'bankSlug': bank.slug, 'outcomeSlug': outcome.slug}
     $: version = versionStringToInt(params.exerciseVersion);
     $: exercise = outcome.exercises[version]
     $: pages = Math.min(20,outcome.exercises.length)
@@ -34,17 +33,17 @@
     $: if (page !== version) {
         push(`/bank/${params.outcomeSlug}/${page+1}/${$querystring ? "?"+$querystring : ""}`);
     }
-    $: countInAssessment = $assessmentOutcomeRefs.filter(r=>sameRefs(r,outcomeRef)).length
+    $: countInAssessment = $assessmentOutcomeSlugs.filter(slug=>slug==outcome.slug).length
     const addToAssessment = () => {
-        $assessmentOutcomeRefs = [...$assessmentOutcomeRefs, outcomeRef]
+        $assessmentOutcomeSlugs = [...$assessmentOutcomeSlugs, outcome.slug]
     }
     const removeFromAssessment = () => {
-        let i = $assessmentOutcomeRefs
-            .map(r=>sameRefs(r,outcomeRef))
+        let i = $assessmentOutcomeSlugs
+            .map(slug=>slug==outcome.slug)
             .lastIndexOf(true)
-        $assessmentOutcomeRefs = [
-            ...$assessmentOutcomeRefs.slice(0, i),
-            ...$assessmentOutcomeRefs.slice(i + 1)
+        $assessmentOutcomeSlugs = [
+            ...$assessmentOutcomeSlugs.slice(0, i),
+            ...$assessmentOutcomeSlugs.slice(i + 1)
         ]
     }
 </script>

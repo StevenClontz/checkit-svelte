@@ -1,5 +1,4 @@
 import { writable } from 'svelte/store';
-import type { OutcomeRef } from '../types';
 
 let _ie = false;
 if (localStorage.getItem('instructorEnabled')) {
@@ -13,14 +12,14 @@ instructorEnabled.subscribe(value => {
     localStorage.setItem("instructorEnabled", JSON.stringify(value));
 });
 
-let _ao: Array<OutcomeRef> = [];
-if (localStorage.getItem('assessmentOutcomeRefs')) {
+let _ao: Array<string> = [];
+if (localStorage.getItem('assessmentOutcomeSlugs')) {
     try {
-        let _aotry = JSON.parse(localStorage.getItem('assessmentOutcomeRefs'));
+        let _aotry = JSON.parse(localStorage.getItem('assessmentOutcomeSlugs'));
         if (Array.isArray(_aotry)) { _ao = _aotry }
     } catch {}
 }
-export const assessmentOutcomeRefs = writable(_ao);
-assessmentOutcomeRefs.subscribe(value => {
-    localStorage.setItem("assessmentOutcomeRefs", JSON.stringify(value));
+export const assessmentOutcomeSlugs = writable(_ao);
+assessmentOutcomeSlugs.subscribe(value => {
+    localStorage.setItem("assessmentOutcomeSlugs", JSON.stringify(value));
 });

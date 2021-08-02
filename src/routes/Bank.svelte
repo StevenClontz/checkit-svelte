@@ -23,11 +23,14 @@
         {#if $bank.outcomes}
             {#if $querystring != "embed"}
                 <p>
-                    <OutcomeDropdown bank={$bank} {outcome}/>
+                    <OutcomeDropdown {outcome}/>
                 </p>
             {/if}
         {:else}
             <Alert color="warning">No outcomes found for this bank.</Alert>
+        {/if}
+        {#if !outcome}
+            <p>Homepage: <a href={$bank.url}>{$bank.url}</a></p>
         {/if}
         <slot/>
     </Container>

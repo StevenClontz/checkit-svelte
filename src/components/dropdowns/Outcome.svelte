@@ -5,9 +5,9 @@
         DropdownMenu,
         DropdownItem,
     } from 'sveltestrap';
-    import type { Bank, Outcome } from '../../types';
-
-    export let bank: Bank;
+    import type { Outcome } from '../../types';
+    import { bank } from '../../stores/banks';
+    
     export let outcome: Outcome | undefined = undefined;
 </script>
 
@@ -20,7 +20,7 @@
         {/if}
     </DropdownToggle>
     <DropdownMenu>
-        {#each bank.outcomes as o}
+        {#each $bank.outcomes as o}
             <DropdownItem disabled={o===outcome} href="#/bank/{o.slug}">
                 {#if o===outcome}»{/if} {o.slug} — {o.title}
             </DropdownItem>

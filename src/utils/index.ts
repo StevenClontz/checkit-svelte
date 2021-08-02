@@ -1,22 +1,15 @@
-import type {Bank, OutcomeRef, Assessment} from '../types';
+import type {Bank, Assessment} from '../types';
 
 import {isOpen as codeCellIsOpen} from '../stores/codecell';
 
 export const toggleCodeCell = () => {codeCellIsOpen.update(x=>!x)}
 
-export const refToBank = (ref:OutcomeRef,banks:Bank[]) => 
-    banks.find((b)=>b.slug===ref.bankSlug)
-
-export const refToOutcome = (ref:OutcomeRef,banks:Bank[]) =>
-    refToBank(ref,banks).outcomes.find((o)=>o.slug===ref.outcomeSlug)
+export const getOutcomeFromSlug = (bank:Bank,slug:string) =>
+    bank.outcomes.find((o)=>o.slug===slug)
 
 export const sample = (a:Array<any>) => a[Math.floor(Math.random()*a.length)]
 
-export const sameRefs = (o0:OutcomeRef,o1:OutcomeRef) => {
-    return o0.bankSlug==o1.bankSlug && o0.outcomeSlug==o1.outcomeSlug
-}
-
-export const refsToAssessment = (refs:OutcomeRef[],banks:Bank[]) => {
+export const getRandomAssessmentFromSlugs = (bank:Bank,slugs:string[]) => {
     const assessmentPrefix = `
 \\documentclass[11pt]{exam}
 
@@ -76,8 +69,8 @@ in the space provided.
             "exercises": [],
         }
         assessment.tex = assessmentPrefix
-        refs.forEach( (ref,i) => {
-            let o = refToOutcome(ref,banks)
+        slugs.forEach( (slug,i) => {
+            let o = getOutcomeFromSlug(bank,slug)
             let e = sample(o.exercises)
             assessment.tex = assessment.tex + "\n\n" + e.tex
             if (i%2===1) {
