@@ -21,10 +21,15 @@
 </script>
 
 <Navbar color="primary" dark expand="md">
-    <NavbarBrand href="#/">☑️It</NavbarBrand>
+    <NavbarBrand href="https://checkit.clontz.org" target="_blank">☑️It</NavbarBrand>
     <NavbarToggler on:click={() => (isOpen = !isOpen)} />
     <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
         <Nav navbar>
+            <NavItem>
+                <NavLink href="#/bank/">
+                    Bank Home
+                </NavLink>
+            </NavItem>
             <NavItem>
                 <NavLink on:click={toggleCodeCell}>
                     Code Cell
@@ -44,7 +49,7 @@
             </NavItem>
             {#if $instructorEnabled}
                 <NavItem>
-                    <NavLink href="#/assessment" active={$location=="/assessment"}>
+                    <NavLink href="#/assessment">
                         Assessment Builder
                     </NavLink>
                 </NavItem>
