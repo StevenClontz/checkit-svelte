@@ -3,8 +3,9 @@
     import { afterUpdate } from 'svelte';
     import type { Exercise, Bank, Outcome } from '../types';
     import { instructorEnabled } from '../stores/instructor';
-    import { embedMode } from '../stores/embed';
     import { Nav, NavItem, NavLink, Row, Col } from 'sveltestrap';
+
+    export let embedded:Boolean = false;
 
     export let bank: Bank = 
         {title: 'unknown', slug: 'unknown', outcomes: []};
@@ -58,7 +59,7 @@
     }
 </script>
 
-{#if !statementOnly && !$embedMode}
+{#if !statementOnly && !embedded}
     {#if $instructorEnabled}
         <div class="navtabs">
             <Nav tabs>
@@ -79,7 +80,7 @@
     {/if}
 {/if}
 
-{#if $embedMode }
+{#if embedded }
     <div bind:this={exerciseDiv}>{@html parseMath(exercise.html)}</div>
 {:else}
 <Row>

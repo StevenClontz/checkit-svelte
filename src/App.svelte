@@ -1,37 +1,31 @@
 <script lang="ts">
-    import Nav from './components/Nav.svelte';
     import { onMount } from 'svelte';
-    import { banks } from './stores/banks';
-    import { embedMode } from './stores/embed';
-    import Router from 'svelte-spa-router';
+    import { bank } from './stores/banks';
+    import Router, { querystring } from 'svelte-spa-router';
     import { routes } from './routes';
     import { Spinner } from 'sveltestrap';
     import CodeCell from './components/CodeCell.svelte';
+    import Nav from './components/Nav.svelte';
 
     let loading = true;
     onMount(async () => {
-        if (window['embedMode']) {
-            $embedMode = true;
-        }
-        const diffeq = await fetch(
-            `https://stevenclontz.github.io/checkit-clontz-diff-eq/builds/public/clontz-diff-eq-bank.json`
+        const bankFetch = await fetch(
+            window['bankJsonUrl']
         );
-        const la = await fetch(
-            `https://teambasedinquirylearning.github.io/checkit-tbil-la/builds/public/tbil-la-bank.json`
-        );
-        banks.set([
-            await diffeq.json(),
-            await la.json(),
-        ])
+        bank.set(
+            await bankFetch.json(),
+        )
         loading = false;
     });
 
 </script>
 
-{#if !$embedMode}
+{#if $querystring != "embed"}
 <Nav/>
 {/if}
+
 <CodeCell/>
+
 {#if loading}
     <div class="text-center">
         <h1 class="display-4">Loading ☑️It...</h1>
@@ -39,11 +33,21 @@
     </div>
 {:else}
     <Router {routes}/>
-{/if}
-{#if $embedMode}
-<p class="text-center"><small><em>Powered by <a target="_blank" href="https://checkit.clontz.org">CheckIt.clontz.org</a>.</em></small></p>
+
+    <footer>
+        <p class="text-center text-muted">
+            <small>
+                <em>
+                    Randomized exericse bank powered by
+                    <a target="_blank" href="https://checkit.clontz.org">CheckIt</a>
+                    v0.1
+                </em>
+            </small>
+        </p>
+    </footer>
 {/if}
 
 <style>
     h1 { margin-top: 1em; }
+    footer { margin-top: 2em; }
 </style>

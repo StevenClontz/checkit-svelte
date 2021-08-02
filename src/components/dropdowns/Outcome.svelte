@@ -21,7 +21,7 @@
     </DropdownToggle>
     <DropdownMenu>
         {#each bank.outcomes as o}
-            <DropdownItem disabled={o===outcome} href="#/banks/{bank.slug}/{o.slug}">
+            <DropdownItem disabled={o===outcome} href="#/bank/{o.slug}">
                 {#if o===outcome}»{/if} {o.slug} — {o.title}
             </DropdownItem>
         {/each}

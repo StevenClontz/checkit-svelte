@@ -3,11 +3,10 @@
     import Exercise from '../components/Exercise.svelte';
     import type { Params } from '../types';
     import { Button, Row, Col } from 'sveltestrap';
-    import { banks } from '../stores/banks';
-    import { embedMode } from '../stores/embed';
+    import { bank } from '../stores/banks';
     import { instructorEnabled, assessmentOutcomeRefs } from '../stores/instructor';
     import Bank from './Bank.svelte';
-    import { push } from 'svelte-spa-router';
+    import { push, querystring } from 'svelte-spa-router';
     import { toggleCodeCell, sameRefs } from '../utils';
 
     export let params:Params;
@@ -18,10 +17,9 @@
             toggleAnswer()
         }
     }
-    const versionStringToInt = (vs:string|undefined) => parseInt(vs || "1")-1
+    const versionStringToInt = (vs:string) => parseInt(vs)-1
 
-    $: bank = $banks.find((b)=>b.slug==params.bankSlug);
-    $: outcome = bank.outcomes.find((o)=>o.slug==params.outcomeSlug);
+    $: outcome = $bank.outcomes.find((o)=>o.slug==params.outcomeSlug);
     $: outcomeRef = {'bankSlug': bank.slug, 'outcomeSlug': outcome.slug}
     $: version = versionStringToInt(params.exerciseVersion);
     $: exercise = outcome.exercises[version]
@@ -34,7 +32,7 @@
         outcomeSlug = params.outcomeSlug;
     }
     $: if (page !== version) {
-        push(`/banks/${params.bankSlug}/${params.outcomeSlug}/${page+1}`);
+        push(`/bank/${params.outcomeSlug}/${page+1}/${$querystring ? "?"+$querystring : ""}`);
     }
     $: countInAssessment = $assessmentOutcomeRefs.filter(r=>sameRefs(r,outcomeRef)).length
     const addToAssessment = () => {
@@ -55,13 +53,12 @@
 
 <Bank {params}>
     
+    {#if $querystring=="embed"}<h5>{outcomeSlug} — {outcome.title}</h5>{/if}
     <p>
-        {#if $embedMode}<span class="h5">{bank.title} {outcomeSlug}.</span>{/if}
-        {outcome.description} <br/>
-        <small>{outcome.alignment}</small>
+        {outcome.description}
     </p>
     
-    {#if $embedMode }
+    {#if $querystring=="embed" }
         <p class="d-none d-sm-block">
             <Pagination
                 label="Version:"
@@ -135,6 +132,6 @@
     {/if}
     
     <div class='mt-2'>
-        <Exercise {hiddenAnswer} {exercise} {outcome} {bank} {page}/>
+        <Exercise {hiddenAnswer} {exercise} {outcome} bank={$bank} {page} embedded={$querystring=="embed"}/>
     </div>
 </Bank>

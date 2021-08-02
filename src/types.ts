@@ -18,7 +18,6 @@ export type Exercise = {
     html: string;
 }
 export type Params = {
-    bankSlug: string;
     outcomeSlug: string;
     exerciseVersion: string;
 }

@@ -1,5 +1,4 @@
 <script lang="ts">
-    import BankDropdown from './dropdowns/Bank.svelte';
     import {
         Navbar,
         NavbarBrand,
@@ -13,10 +12,7 @@
         NavbarToggler,
     } from 'sveltestrap';
     import {location} from 'svelte-spa-router';
-    import type { Bank } from '../types';
     import { instructorEnabled } from '../stores/instructor';
-    
-    export let bank: Bank | undefined = undefined;
 
     let isOpen = false;
     const handleUpdate = (event) => isOpen = event.detail.isOpen
@@ -29,7 +25,6 @@
     <NavbarToggler on:click={() => (isOpen = !isOpen)} />
     <Collapse {isOpen} navbar expand="md" on:update={handleUpdate}>
         <Nav navbar>
-            <BankDropdown {bank} inNav/>
             <NavItem>
                 <NavLink on:click={toggleCodeCell}>
                     Code Cell
@@ -51,11 +46,6 @@
                 <NavItem>
                     <NavLink href="#/assessment" active={$location=="/assessment"}>
                         Assessment Builder
-                    </NavLink>
-                </NavItem>
-                <NavItem>
-                    <NavLink href="https://github.com/StevenClontz/checkit-platform/#dashboard">
-                        Dashboard
                     </NavLink>
                 </NavItem>
             {/if}

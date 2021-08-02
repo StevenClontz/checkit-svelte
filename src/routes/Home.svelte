@@ -1,8 +1,4 @@
 <script lang="ts">
-    import Front from '../components/Front.svelte';
-    import Jumbotron from '../components/Jumbotron.svelte';
-    import Nav from '../components/Nav.svelte';
+	import {push} from 'svelte-spa-router'
+	push("/bank/")
 </script>
-
-<Jumbotron/>
-<Front/>
