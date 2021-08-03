@@ -18,6 +18,7 @@
     import type { Assessment } from '../types';
 
     $instructorEnabled = true
+    $assessmentOutcomeSlugs = $assessmentOutcomeSlugs.filter(s=>getOutcomeFromSlug($bank,s)!==undefined)
     const display = (slug:string) => {
         let o = getOutcomeFromSlug($bank,slug);
         return `${slug} — ${o.title}`

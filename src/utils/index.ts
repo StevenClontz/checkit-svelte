@@ -73,12 +73,14 @@ in the space provided.
         assessment.tex = assessmentPrefix
         slugs.forEach( (slug,i) => {
             let o = getOutcomeFromSlug(bank,slug)
-            let e = sample(o.exercises)
-            assessment.tex = assessment.tex + "\n\n" + e.tex
-            if (i%2===1) {
-                assessment.tex = assessment.tex + "\n\n\\newpage\n\n"
+            if (o) {
+                let e = sample(o.exercises)
+                assessment.tex = assessment.tex + "\n\n" + e.tex
+                if (i%2===1) {
+                    assessment.tex = assessment.tex + "\n\n\\newpage\n\n"
+                }
+                assessment.exercises = [...assessment.exercises, e]
             }
-            assessment.exercises = [...assessment.exercises, e]
         })
         assessment.tex = assessment.tex + assessmentSuffix
         assessment.tex = assessment.tex.trim()
