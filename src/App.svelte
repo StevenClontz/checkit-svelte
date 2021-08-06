@@ -40,7 +40,7 @@
                 <em>
                     Randomized exericse bank powered by
                     <a target="_blank" href="https://checkit.clontz.org">CheckIt</a>
-                    v0.1
+                    v0.1.1
                 </em>
             </small>
         </p>
