@@ -2,12 +2,40 @@ import type {Bank, Assessment} from '../types';
 
 import {isOpen as codeCellIsOpen} from '../stores/codecell';
 
+import katex from 'katex';
+
 export const toggleCodeCell = () => {codeCellIsOpen.update(x=>!x)}
 
 export const getOutcomeFromSlug = (bank:Bank,slug:string) =>
     bank.outcomes.find((o)=>o.slug===slug)
 
 export const sample = (a:Array<any>) => a[Math.floor(Math.random()*a.length)]
+
+export const decodeXmlString = (s:string) => {
+    return s.replace(/&apos;/g, "'")
+            .replace(/&quot;/g, '"')
+            .replace(/&gt;/g, '>')
+            .replace(/&lt;/g, '<')
+            .replace(/&amp;/g, '&');
+}
+
+export const parseMath = (html:string) => {
+    let inlineMathRe = /\\\((.*?)\\\)/gs;
+    let displayMathRe = /\\\[(.*?)\\\]/gs;
+    return html.replace(
+        inlineMathRe,
+        (_, tex:string) => katex.renderToString(decodeXmlString(tex), {
+            'displayMode': false,
+            'throwOnError': false,
+        })
+    ).replace(
+        displayMathRe,
+        (_, tex:string) => katex.renderToString(decodeXmlString(tex), {
+            'displayMode': true,
+            'throwOnError': false,
+        })
+    );
+}
 
 export const getRandomAssessmentFromSlugs = (bank:Bank,slugs:string[]) => {
     const assessmentPrefix = `

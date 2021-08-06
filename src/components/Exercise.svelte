@@ -1,9 +1,9 @@
 <script lang="ts">
-    import katex from 'katex';
     import { afterUpdate } from 'svelte';
     import type { Exercise, Outcome } from '../types';
     import { instructorEnabled } from '../stores/instructor';
     import { Nav, NavItem, NavLink, Row, Col } from 'sveltestrap';
+    import { parseMath } from '../utils';
 
     export let embedded:Boolean = false;
 
@@ -14,23 +14,7 @@
     export let hiddenAnswer: boolean=true;
     export let statementOnly: boolean=false;
 
-    let inlineMathRe = /\\\((.*?)\\\)/gs;
-    let displayMathRe = /\\\[(.*?)\\\]/gs;
-    const parseMath = (html:string) => {
-        return html.replace(
-            inlineMathRe,
-            (_, tex:string) => katex.renderToString(tex.replace(/&amp;/g,'&'), {
-                'displayMode': false,
-                'throwOnError': false,
-            })
-        ).replace(
-            displayMathRe,
-            (_, tex:string) => katex.renderToString(tex.replace(/&amp;/g,'&'), {
-                'displayMode': true,
-                'throwOnError': false,
-            })
-        );
-    }
+
 
     let exerciseDiv: Element;
     const decorateAnswer = () => {
